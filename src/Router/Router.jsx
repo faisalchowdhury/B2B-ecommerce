@@ -9,6 +9,7 @@ import NotFound from "../Pages/NotFound";
 import AddProduct from "../Pages/AddProduct";
 import axios from "axios";
 import CategoryProduct from "../Pages/CategoryProduct";
+import ProductDetails from "../Pages/ProductDetails";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +38,12 @@ export const router = createBrowserRouter([
         Component: CategoryProduct,
         loader: ({ params }) =>
           axios.get(`http://localhost:3000/category/${params.category}`),
+      },
+      {
+        path: "/product/:id",
+        Component: ProductDetails,
+        loader: ({ params }) =>
+          axios.get(`http://localhost:3000/product/${params.id}`),
       },
     ],
   },
