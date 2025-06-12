@@ -5,6 +5,7 @@ import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import MainLayout from "../Layout/MainLayout";
 import Home from "../Pages/Home";
+import NotFound from "../Pages/NotFound";
 
 export const router = createBrowserRouter([
   {
@@ -24,5 +25,9 @@ export const router = createBrowserRouter([
         Component: Register,
       },
     ],
+  },
+  {
+    path: "*",
+    Component: NotFound,
   },
 ]);

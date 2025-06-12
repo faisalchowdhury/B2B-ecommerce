@@ -11,7 +11,7 @@
 @plugin "daisyui/theme" {
   name: "mytheme";
   default: true;
-  --color-primary: "#f6d78069";
+  --color-primary: "#F8AF24";
 }
 
 /* Swiper */
