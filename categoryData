@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Electronics & Gadgets",
+    "slug": "electronics-gadgets",
+    "image_path": "https://i.ibb.co/60H7RKqc/icons8-electronic-64.png"
+  },
+  {
+    "name": "Home & Kitchen Appliances",
+    "slug": "home-kitchen",
+    "image_path": "https://i.ibb.co/yFvv2s58/icons8-car-battery-50.png"
+  },
+  {
+    "name": "Video Gaming",
+    "slug": "video-gaming",
+    "image_path": "https://i.ibb.co/hJVQjWmd/icons8-apple-health-48.png"
+  },
+  {
+    "name": "Fashion & Apparel",
+    "slug": "fashion-apparel",
+    "image_path": "https://i.ibb.co/Z60MjGgS/icons8-fashion-50.png"
+  },
+  {
+    "name": "Industrial Machinery & Tools",
+    "slug": "industrial-machinery",
+    "image_path": "https://i.ibb.co/4RY1r0yc/icons8-game-50.png"
+  },
+  {
+    "name": "Health & Beauty",
+    "slug": "health-beauty",
+    "image_path": "https://i.ibb.co/LhDdWcsY/icons8-kitchen-room-50.png"
+  },
+  {
+    "name": "Automotive Parts & Accessories",
+    "slug": "automotive-parts",
+    "image_path": "https://i.ibb.co/pvz6ffg1/icons8-machinery-50.png"
+  },
+  {
+    "name": "Office Supplies & Stationery",
+    "slug": "office-supplies",
+    "image_path": "https://i.ibb.co/qYXYSZv2/office.png"
+  }
+]

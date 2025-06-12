@@ -6,7 +6,10 @@ import delivery from "../assets/delivery.png";
 import support from "../assets/support.png";
 import card from "../assets/card.png";
 import like from "../assets/like.png";
+import { Link, useLoaderData } from "react-router";
 const Home = () => {
+  const { data } = useLoaderData();
+  console.log(data);
   return (
     <div className="max-w-[1400px] mx-auto py-10">
       <Slider></Slider>
@@ -14,50 +17,18 @@ const Home = () => {
       {/* Category Section */}
 
       <div className="grid grid-cols-5 py-20 gap-5">
-        <div className="p-10 shadow rounded-xl hover:shadow-xl bg-slate-50">
-          <img
-            src="https://i.ibb.co/60H7RKqc/icons8-electronic-64.png"
-            alt=""
-          />
-          <h2 className="text-xl font-semibold space-y-3 ">Electronics</h2>
-          <p>Products Available - 300</p>
-        </div>
-
-        <div className="p-10 shadow rounded-xl hover:shadow-xl bg-slate-50">
-          <img
-            src="https://i.ibb.co/60H7RKqc/icons8-electronic-64.png"
-            alt=""
-          />
-          <h2 className="text-xl font-semibold space-y-3 ">Electronics</h2>
-          <p>Products Available - 300</p>
-        </div>
-
-        <div className="p-10 shadow rounded-xl hover:shadow-xl bg-slate-50">
-          <img
-            src="https://i.ibb.co/60H7RKqc/icons8-electronic-64.png"
-            alt=""
-          />
-          <h2 className="text-xl font-semibold space-y-3 ">Electronics</h2>
-          <p>Products Available - 300</p>
-        </div>
-
-        <div className="p-10 shadow rounded-xl hover:shadow-xl bg-slate-50">
-          <img
-            src="https://i.ibb.co/60H7RKqc/icons8-electronic-64.png"
-            alt=""
-          />
-          <h2 className="text-xl font-semibold space-y-3 ">Electronics</h2>
-          <p>Products Available - 300</p>
-        </div>
-
-        <div className="p-10 shadow rounded-xl hover:shadow-xl bg-slate-50">
-          <img
-            src="https://i.ibb.co/60H7RKqc/icons8-electronic-64.png"
-            alt=""
-          />
-          <h2 className="text-xl font-semibold space-y-3 ">Electronics</h2>
-          <p>Products Available - 300</p>
-        </div>
+        {data.map((category) => (
+          <Link to={`/category/${category.slug}`}>
+            <div className="p-10 shadow rounded-xl hover:shadow-xl bg-slate-50 h-[200px] flex items-center">
+              <div>
+                <img src={category.image_path} alt="" />
+                <h2 className="text-xl font-semibold space-y-3 ">
+                  {category.name}
+                </h2>
+              </div>
+            </div>
+          </Link>
+        ))}
       </div>
       {/* Category Section */}
 

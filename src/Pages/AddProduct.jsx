@@ -89,23 +89,21 @@ const AddProduct = () => {
                 className="select border border-slate-300 rounded-full w-full">
                 <option disabled={true}>Choose a hobby</option>
 
-                <option value="Electronics & Gadgets">
+                <option value="electronics-gadgets">
                   Electronics & Gadgets
                 </option>
-                <option value="Home & Kitchen Appliances">
-                  Home & Kitchen Appliances
-                </option>
-                <option value="Video Gaming">Video Gaming</option>
-                <option value="Fashion & Apparel">Fashion & Apparel</option>
-                <option value="Industrial Machinery & Tools">
+                <option value="home-kitchen">Home & Kitchen Appliances</option>
+                <option value="video-gaming">Video Gaming</option>
+                <option value="fashion-apparel">Fashion & Apparel</option>
+                <option value="industrial-machinery">
                   {" "}
                   Industrial Machinery & Tools
                 </option>
-                <option value="Health & Beauty">Health & Beauty</option>
-                <option value="Automotive Parts & Accessories">
+                <option value="health-beauty">Health & Beauty</option>
+                <option value="automotive-parts">
                   Automotive Parts & Accessories
                 </option>
-                <option value="Office Supplies & Stationery">
+                <option value="office-supplies">
                   Office Supplies & Stationery
                 </option>
               </select>

@@ -2,7 +2,7 @@ import React from "react";
 import logo from "../assets/logo.png";
 import { Link, NavLink } from "react-router";
 import { FaFacebook, FaGithub, FaLinkedin } from "react-icons/fa";
-
+import paymentOption from "../assets/payment-option.png";
 const Footer = () => {
   return (
     <div className="mt-10">
@@ -21,10 +21,10 @@ const Footer = () => {
               </p>
             </div>
             <div className="space-y-3">
-              <h3 className="tracking-wide text-xl uppercase ">
+              <h3 className="tracking-wide text-md uppercase ">
                 Important Links
               </h3>
-              <div className="flex flex-col text-lg">
+              <div className="flex flex-col text-md">
                 {" "}
                 <NavLink to={"/"}>Home</NavLink>
                 <NavLink to={"/"}>Categories </NavLink>
@@ -35,36 +35,13 @@ const Footer = () => {
               </div>
             </div>
             <div className="space-y-3">
-              <div className="uppercase text-xl ">Social media</div>
+              <div className="uppercase text-md ">Payment Method</div>
               <div className="flex justify-start space-x-3">
-                <a
-                  rel="noopener noreferrer"
-                  href="https://www.facebook.com/faisal.ahmed.chowdhury.336926/"
-                  title="Facebook"
-                  target="_blank"
-                  className="flex items-center p-1">
-                  <FaFacebook size={24}></FaFacebook>
-                </a>
-                <a
-                  rel="noopener noreferrer"
-                  href="https://www.linkedin.com/in/faisal-chowdhury-730a051a6/"
-                  title="Linkedin"
-                  target="_blank"
-                  className="flex items-center p-1">
-                  <FaLinkedin size={24}></FaLinkedin>
-                </a>
-                <a
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  href="https://github.com/faisalchowdhury"
-                  title="Github"
-                  className="flex items-center p-1">
-                  <FaGithub size={24}></FaGithub>
-                </a>
+                <img className="w-[250px]" src={paymentOption} alt="" />
               </div>
             </div>
             <div className="space-y-3">
-              <h3 className="tracking-wide text-xl uppercase ">Get In Touch</h3>
+              <h3 className="tracking-wide text-md uppercase ">Get In Touch</h3>
 
               <form action="">
                 <div className="join">
