@@ -1,16 +1,43 @@
 import React, { useContext, useRef } from "react";
 import { AuthContext } from "../Context/AuthContext";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const AddProduct = () => {
   const { user } = useContext(AuthContext);
   const textArea = useRef("");
+  const handleCreateGroup = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+    const { user_name, ...formFields } = Object.fromEntries(formData);
+    const textAreaData = textArea.current.value;
+    const data = {
+      ...formFields,
+      description: textAreaData,
+    };
+
+    axios.post("http://localhost:3000/add-product", data).then((res) => {
+      if (res.data.acknowledged) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your Product has been added",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        form.reset();
+      }
+    });
+  };
   return (
     <>
       <div
         className={`max-w-7xl mx-auto bg-slate-100 p-5 rounded-sm space-y-5 my-10`}>
         <title>Add a Product</title>
         <h2 className="text-2xl">Add a Product</h2>
-        <form>
+        <form onSubmit={handleCreateGroup}>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             <div>
               <label htmlFor="">Product Name</label>
@@ -112,7 +139,7 @@ const AddProduct = () => {
                 required
                 name="user_name"
                 type="text"
-                value={user?.displayName}
+                defaultValue={user?.displayName}
                 readOnly
                 className="input border border-slate-300 rounded-full w-full"
               />
@@ -123,7 +150,7 @@ const AddProduct = () => {
                 required
                 name="user_email"
                 type="text"
-                value={user?.email}
+                defaultValue={user?.email}
                 readOnly
                 className="input border border-slate-300 rounded-full w-full "
               />
