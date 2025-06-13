@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 const AddProduct = () => {
   const { user } = useContext(AuthContext);
   const textArea = useRef("");
-  const handleCreateGroup = (event) => {
+  const handleCreateProduct = (event) => {
     event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
@@ -37,7 +37,7 @@ const AddProduct = () => {
         className={`max-w-7xl mx-auto bg-slate-100 p-5 rounded-sm space-y-5 my-10`}>
         <title>Add a Product</title>
         <h2 className="text-2xl">Add a Product</h2>
-        <form onSubmit={handleCreateGroup}>
+        <form onSubmit={handleCreateProduct}>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             <div>
               <label htmlFor="">Product Name</label>
@@ -84,10 +84,10 @@ const AddProduct = () => {
               <label htmlFor="">Category</label>
               <select
                 required
-                name="hobby-category"
-                defaultValue="Choose a hobby"
+                name="category"
+                defaultValue="Choose a category"
                 className="select border border-slate-300 rounded-full w-full">
-                <option disabled={true}>Choose a hobby</option>
+                <option disabled={true}>Choose a category</option>
 
                 <option value="electronics-gadgets">
                   Electronics & Gadgets

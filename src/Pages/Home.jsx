@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
 import Slider from "../Components/Slider";
 import newsLetterAnimation from "../assets/Lottie-animation/newsletter.json";
 import Lottie from "lottie-react";
@@ -7,9 +8,16 @@ import support from "../assets/support.png";
 import card from "../assets/card.png";
 import like from "../assets/like.png";
 import { Link, useLoaderData } from "react-router";
+import axios from "axios";
+import ProductCard from "../Components/ProductCard";
 const Home = () => {
   const { data } = useLoaderData();
-
+  const [arrival, setArrival] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/new-arrival-products")
+      .then((res) => setArrival(res.data));
+  }, []);
   return (
     <div className="max-w-[1400px] mx-auto py-10">
       <Slider></Slider>
@@ -60,8 +68,14 @@ const Home = () => {
       </div>
       {/* Newsletter */}
       {/* New Arrival */}
-      <section className="py-10">
+      <section className="py-10 space-y-5">
         <h3 className="text-xl">New Arrival</h3>
+
+        <div className="grid grid-cols-4 gap-5 ">
+          {arrival.map((product) => (
+            <ProductCard key={product._id} product={product}></ProductCard>
+          ))}
+        </div>
       </section>
       {/* New Arrival */}
       {/* Service */}

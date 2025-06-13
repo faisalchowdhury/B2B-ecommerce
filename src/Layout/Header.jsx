@@ -22,7 +22,7 @@ const Header = () => {
     <>
       <NavLink to={"/"}>Home</NavLink>
       <NavLink to={"/"}>Categories </NavLink>
-      <NavLink to={"/"}>All Products</NavLink>
+      <NavLink to={"/products"}>All Products</NavLink>
       <NavLink to={"/add-product"}>Add Product</NavLink>
       <NavLink to={"/"}>My Products</NavLink>
       <NavLink to={"/"}>Cart</NavLink>

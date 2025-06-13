@@ -33,7 +33,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "add-product",
-        Component: AddProduct,
+        element: (
+          <PrivateRoute>
+            <AddProduct></AddProduct>
+          </PrivateRoute>
+        ),
       },
       {
         path: "category/:category",
