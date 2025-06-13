@@ -7,9 +7,11 @@ import { FaEdit } from "react-icons/fa";
 import useAuth from "../Hooks/useAuth";
 
 import toast, { Toaster } from "react-hot-toast";
+import { MdDeleteOutline } from "react-icons/md";
 
 const AllProducts = () => {
   const { data } = useLoaderData();
+  const [products, setProducts] = useState(data);
   const { user } = useAuth();
   const modalBox = useRef("");
   const textArea = useRef("");
@@ -46,13 +48,21 @@ const AllProducts = () => {
       .get(`http://localhost:3000/product/${id}`)
       .then((res) => setUpdateProductData(res.data));
   };
+  const handleDeleteProduct = (id) => {
+    axios.delete(`http://localhost:3000/delete/${id}`).then((res) => {
+      if (res.data.deletedCount) {
+        const newProducts = products.filter((product) => product._id != id);
+        setProducts(newProducts);
+      }
+    });
+  };
 
   return (
     <>
       <div className="max-w-7xl mx-auto my-10 space-y-5">
         <h2 className="text-xl font-medium">All Products</h2>
         <div className="grid grid-cols-4 gap-5 ">
-          {data.map((product) => (
+          {products.map((product) => (
             <div key={product._id}>
               <div>
                 <div className="relative flex w-full h-[400px]  flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md ">
@@ -91,7 +101,7 @@ const AllProducts = () => {
                         </span>
                       </div>
                     </div>
-                    <div className="flex items-center gap-5">
+                    <div className="flex items-center gap-2">
                       <Link
                         to={`/product/${product._id}`}
                         className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
@@ -102,6 +112,12 @@ const AllProducts = () => {
                         onClick={() => openModal(product._id)}
                         className="flex items-center justify-center rounded-md bg-yellow-500 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
                         <FaEdit size={20}></FaEdit>
+                      </button>
+
+                      <button
+                        onClick={() => handleDeleteProduct(product._id)}
+                        className="flex items-center justify-center rounded-md bg-red-500 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
+                        <MdDeleteOutline size={20} />
                       </button>
                     </div>
                   </div>
