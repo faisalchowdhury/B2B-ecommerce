@@ -11,6 +11,7 @@ import axios from "axios";
 import CategoryProduct from "../Pages/CategoryProduct";
 import ProductDetails from "../Pages/ProductDetails";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import AllProducts from "../Pages/AllProducts";
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +50,15 @@ export const router = createBrowserRouter([
         ),
         loader: ({ params }) =>
           axios.get(`http://localhost:3000/product/${params.id}`),
+      },
+      {
+        path: "/products",
+        loader: () => axios.get(`http://localhost:3000/products`),
+        element: (
+          <PrivateRoute>
+            <AllProducts></AllProducts>
+          </PrivateRoute>
+        ),
       },
     ],
   },
