@@ -10,6 +10,7 @@ import AddProduct from "../Pages/AddProduct";
 import axios from "axios";
 import CategoryProduct from "../Pages/CategoryProduct";
 import ProductDetails from "../Pages/ProductDetails";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -41,7 +42,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/product/:id",
-        Component: ProductDetails,
+        element: (
+          <PrivateRoute>
+            <ProductDetails></ProductDetails>
+          </PrivateRoute>
+        ),
         loader: ({ params }) =>
           axios.get(`http://localhost:3000/product/${params.id}`),
       },

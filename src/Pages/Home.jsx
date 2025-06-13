@@ -9,7 +9,7 @@ import like from "../assets/like.png";
 import { Link, useLoaderData } from "react-router";
 const Home = () => {
   const { data } = useLoaderData();
-  console.log(data);
+
   return (
     <div className="max-w-[1400px] mx-auto py-10">
       <Slider></Slider>
@@ -18,7 +18,7 @@ const Home = () => {
 
       <div className="grid grid-cols-5 py-20 gap-5">
         {data.map((category) => (
-          <Link to={`/category/${category.slug}`}>
+          <Link key={category._id} to={`/category/${category.slug}`}>
             <div className="p-10 shadow rounded-xl hover:shadow-xl bg-slate-50 h-[200px] flex items-center">
               <div>
                 <img src={category.image_path} alt="" />
@@ -59,7 +59,11 @@ const Home = () => {
         </div>
       </div>
       {/* Newsletter */}
-
+      {/* New Arrival */}
+      <section className="py-10">
+        <h3 className="text-xl">New Arrival</h3>
+      </section>
+      {/* New Arrival */}
       {/* Service */}
       <div className="grid grid-cols-4 py-20 gap-5">
         <div className="flex gap-5 p-5 items-center shadow bg-slate-50 rounded hover:shadow-xl border-2 border-dashed">

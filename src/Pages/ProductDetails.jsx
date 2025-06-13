@@ -1,9 +1,11 @@
 import { Rating, Star } from "@smastrom/react-rating";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLoaderData } from "react-router";
 import "@smastrom/react-rating/style.css";
+import axios from "axios";
 const ProductDetails = () => {
   const { data } = useLoaderData();
+  const [productCategory, setProductCategory] = useState("");
   const {
     image_url,
     product_name,
@@ -12,7 +14,16 @@ const ProductDetails = () => {
     category,
     brand,
     description,
+    user_name,
+    user_email,
   } = data;
+
+  useEffect(() => {
+    axios.get("http://localhost:3000/categories").then((res) => {
+      const currentCat = res.data.find((cat) => cat.slug === category);
+      setProductCategory(currentCat);
+    });
+  }, []);
 
   const myStyles = {
     itemShapes: Star,
@@ -24,7 +35,7 @@ const ProductDetails = () => {
       <section className="py-8 md:py-16  antialiased">
         <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0">
           <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
-            <div className="shrink-0 max-w-md lg:max-w-lg mx-auto">
+            <div className="shrink-0 max-w-md lg:max-w-lg mx-auto flex justify-center items-center">
               <img className="w-full" src={image_url} alt="" />
             </div>
 
@@ -49,17 +60,19 @@ const ProductDetails = () => {
                   <p className="text-sm font-medium leading-none text-gray-500 dark:text-gray-400">
                     ({rating})
                   </p>
-                  <a
-                    href="#"
-                    className="text-sm font-medium leading-none text-gray-900 underline hover:no-underline ">
-                    345 Reviews
-                  </a>
                 </div>
               </div>
               <div>
                 <p>
-                  Category - {category} | Brand - {brand}
+                  Category - {productCategory?.name} | Brand - {brand}
                 </p>
+              </div>
+
+              <div className="p-5 shadow inline-block bg-slate-50 rounded mt-5">
+                <h3 className="text-lg">Seller Details</h3>
+                <hr />
+                <p>Seller Name - {user_name}</p>
+                <p>Seller Email - {user_email}</p>
               </div>
               <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
                 <a
