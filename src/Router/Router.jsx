@@ -13,6 +13,7 @@ import ProductDetails from "../Pages/ProductDetails";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import AllProducts from "../Pages/AllProducts";
 import Categories from "../Pages/Categories";
+import MyProducts from "../Pages/MyProducts";
 
 export const router = createBrowserRouter([
   {
@@ -72,6 +73,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <AllProducts></AllProducts>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "my-products",
+        element: (
+          <PrivateRoute>
+            <MyProducts></MyProducts>
           </PrivateRoute>
         ),
       },
