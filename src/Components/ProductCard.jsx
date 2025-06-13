@@ -11,7 +11,7 @@ const ProductCard = ({ product }) => {
     inactiveFillColor: "gray",
   };
   useEffect(() => {
-    axios.get("http://localhost:3000/categories").then((res) => {
+    axios.get("http://localhost:3000/categories-limit").then((res) => {
       const currentCat = res.data.find((cat) => cat.slug === product.category);
       setProductCategory(currentCat);
     });

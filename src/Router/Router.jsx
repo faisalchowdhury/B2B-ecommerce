@@ -12,6 +12,7 @@ import CategoryProduct from "../Pages/CategoryProduct";
 import ProductDetails from "../Pages/ProductDetails";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import AllProducts from "../Pages/AllProducts";
+import Categories from "../Pages/Categories";
 
 export const router = createBrowserRouter([
   {
@@ -21,7 +22,16 @@ export const router = createBrowserRouter([
       {
         index: true,
         Component: Home,
-        loader: () => axios.get("http://localhost:3000/categories"),
+        loader: () => axios.get("http://localhost:3000/categories-limit"),
+      },
+      {
+        path: "categories",
+        loader: ({ params }) => axios.get(`http://localhost:3000/categories`),
+        element: (
+          <PrivateRoute>
+            <Categories></Categories>
+          </PrivateRoute>
+        ),
       },
       {
         path: "login",
@@ -45,6 +55,7 @@ export const router = createBrowserRouter([
         loader: ({ params }) =>
           axios.get(`http://localhost:3000/category/${params.category}`),
       },
+
       {
         path: "/product/:id",
         element: (
