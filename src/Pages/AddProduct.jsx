@@ -10,8 +10,9 @@ const AddProduct = () => {
     event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
-    const formFields = Object.fromEntries(formData);
+    const { ...formFields } = Object.fromEntries(formData);
     const textAreaData = textArea.current.value;
+
     const data = {
       ...formFields,
       description: textAreaData,
