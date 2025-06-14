@@ -87,7 +87,9 @@ const Header = () => {
             </ul>
           </div>
           <div className="navbar-end text-lg space-x-3 flex items-center">
-            <MdOutlineShoppingBag size={26} />
+            <Link to={"/cart"}>
+              <MdOutlineShoppingBag size={26} />
+            </Link>
             {!user ? (
               <Link
                 className="btn bg-gray-950 border-none text-white px-10 rounded-full hover:bg-black text-lg shadow"

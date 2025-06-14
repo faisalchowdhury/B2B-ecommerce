@@ -8,6 +8,7 @@ import useAuth from "../Hooks/useAuth";
 
 import toast, { Toaster } from "react-hot-toast";
 import { MdDeleteOutline } from "react-icons/md";
+import Swal from "sweetalert2";
 
 const AllProducts = () => {
   const { data } = useLoaderData();
@@ -49,10 +50,20 @@ const AllProducts = () => {
       .then((res) => setUpdateProductData(res.data));
   };
   const handleDeleteProduct = (id) => {
-    axios.delete(`http://localhost:3000/delete/${id}`).then((res) => {
-      if (res.data.deletedCount) {
-        const newProducts = products.filter((product) => product._id != id);
-        setProducts(newProducts);
+    Swal.fire({
+      title: "Do you want to delete this group ?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Delete",
+      denyButtonText: `Don't Delete`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.delete(`http://localhost:3000/delete/${id}`).then((res) => {
+          if (res.data.deletedCount) {
+            const newProducts = products.filter((product) => product._id != id);
+            setProducts(newProducts);
+          }
+        });
       }
     });
   };

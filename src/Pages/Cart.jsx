@@ -77,7 +77,7 @@ const Cart = () => {
                   </Link>
                 </p>
                 <button
-                  onClick={() => handleRemoveFromCart(cartInfo._id)}
+                  onClick={() => handleRemoveFromCart(cartInfo?._id)}
                   className="btn bg-red-600 text-white hover:bg-blue-950 rounded">
                   Remove Product
                 </button>

@@ -99,7 +99,7 @@ const ProductDetails = () => {
         <section className="py-8 md:py-16  antialiased">
           <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0">
             <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
-              <div className="shrink-0 max-w-md lg:max-w-lg mx-auto flex justify-center items-center">
+              <div className="shrink-0 max-w-md lg:max-w-lg mx-auto">
                 <img className="w-full" src={image_url} alt="" />
               </div>
 
@@ -131,7 +131,11 @@ const ProductDetails = () => {
                     Category - {productCategory?.name} | Brand - {brand}
                   </p>
                 </div>
-
+                <div>
+                  <span className="bg-amber-500">
+                    You have to buy Minimum - {minimum_selling_quantity} Units
+                  </span>
+                </div>
                 <div className="p-5 shadow inline-block bg-slate-50 rounded mt-5">
                   <h3 className="text-lg">Seller Details</h3>
                   <hr />
