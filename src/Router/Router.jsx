@@ -14,6 +14,7 @@ import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import AllProducts from "../Pages/AllProducts";
 import Categories from "../Pages/Categories";
 import MyProducts from "../Pages/MyProducts";
+import Loading from "../Components/Loading";
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ export const router = createBrowserRouter([
         index: true,
         Component: Home,
         loader: () => axios.get("http://localhost:3000/categories-limit"),
+        hydrateFallbackElement: <Loading></Loading>,
       },
       {
         path: "categories",
@@ -33,6 +35,7 @@ export const router = createBrowserRouter([
             <Categories></Categories>
           </PrivateRoute>
         ),
+        hydrateFallbackElement: <Loading></Loading>,
       },
       {
         path: "login",
@@ -49,12 +52,14 @@ export const router = createBrowserRouter([
             <AddProduct></AddProduct>
           </PrivateRoute>
         ),
+        hydrateFallbackElement: <Loading></Loading>,
       },
       {
         path: "category/:category",
         Component: CategoryProduct,
         loader: ({ params }) =>
           axios.get(`http://localhost:3000/category/${params.category}`),
+        hydrateFallbackElement: <Loading></Loading>,
       },
 
       {
@@ -66,6 +71,7 @@ export const router = createBrowserRouter([
         ),
         loader: ({ params }) =>
           axios.get(`http://localhost:3000/product/${params.id}`),
+        hydrateFallbackElement: <Loading></Loading>,
       },
       {
         path: "/products",
@@ -75,6 +81,7 @@ export const router = createBrowserRouter([
             <AllProducts></AllProducts>
           </PrivateRoute>
         ),
+        hydrateFallbackElement: <Loading></Loading>,
       },
       {
         path: "my-products",

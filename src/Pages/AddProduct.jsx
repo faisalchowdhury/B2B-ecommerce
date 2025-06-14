@@ -33,6 +33,7 @@ const AddProduct = () => {
   };
   return (
     <>
+      <title>Add Product</title>
       <div
         className={`max-w-7xl mx-auto bg-slate-100 p-5 rounded-sm space-y-5 my-10`}>
         <title>Add a Product</title>
