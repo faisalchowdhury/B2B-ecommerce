@@ -25,7 +25,7 @@ const AllProducts = () => {
   const ratingControl = useRef(null);
   const [updateProductData, setUpdateProductData] = useState({});
 
-  //  View
+  //  Tootle View
   const findView = localStorage.getItem("view");
 
   const [view, setView] = useState(findView);
@@ -46,7 +46,7 @@ const AllProducts = () => {
     localStorage.setItem("view", "card");
     setView("card");
   };
-
+  // Toggle View
   const handleUpdateProduct = (id) => {
     event.preventDefault();
     const form = event.target;
@@ -100,6 +100,21 @@ const AllProducts = () => {
     });
   };
 
+  // Filter Products
+
+  const [filter, setFilter] = useState(false);
+
+  useEffect(() => {
+    if (filter) {
+      const filteredProducts = products.filter(
+        (product) => product.minimum_selling_quantity >= 100
+      );
+      setProducts(filteredProducts);
+    } else {
+      setProducts(data);
+    }
+  }, [filter]);
+
   return (
     <>
       <title>All Products</title>
@@ -107,10 +122,23 @@ const AllProducts = () => {
       <div className="max-w-7xl mx-auto my-10 space-y-5 px-5 sm:px-0">
         <h2 className="text-xl font-medium">All Products</h2>
         <div className="p-5 rounded-lg shadow-lg flex justify-between">
-          <div>
-            <p className="font-semibold">Set View</p>
+          <div className="">
+            <label
+              onMouseUp={() => setFilter(!filter)}
+              className="flex gap-3 items-center font-semibold"
+              htmlFor="filter">
+              {"  "}
+              <input
+                id="filter"
+                type="checkbox"
+                className="checkbox border"
+                name="filter"
+              />
+              <span>Show Available Products</span>
+            </label>
           </div>
           <div className="flex gap-3 items-center">
+            <p className="font-semibold">Set View</p>
             <button title="Card View" onClick={cardView}>
               <MdCheckBoxOutlineBlank size={26} className="hover:cursor-grab" />
             </button>
