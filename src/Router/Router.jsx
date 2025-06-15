@@ -31,11 +31,7 @@ export const router = createBrowserRouter([
       {
         path: "categories",
         loader: ({ params }) => axios.get(`http://localhost:3000/categories`),
-        element: (
-          <PrivateRoute>
-            <Categories></Categories>
-          </PrivateRoute>
-        ),
+        element: <Categories></Categories>,
         hydrateFallbackElement: <Loading></Loading>,
       },
       {

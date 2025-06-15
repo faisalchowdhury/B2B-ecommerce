@@ -91,11 +91,18 @@ const Header = () => {
               <MdOutlineShoppingBag size={26} />
             </Link>
             {!user ? (
-              <Link
-                className="btn bg-gray-950 border-none text-white px-10 rounded-full hover:bg-black text-lg shadow"
-                to={"/login"}>
-                Login
-              </Link>
+              <>
+                <Link
+                  className="btn bg-gray-950 border-none text-white px-10 rounded-full hover:bg-black text-lg shadow"
+                  to={"/login"}>
+                  Login
+                </Link>
+                <Link
+                  className="btn bg-primary border-none text-white px-10 rounded-full hover:bg-black text-lg shadow"
+                  to={"/register"}>
+                  Register
+                </Link>
+              </>
             ) : (
               <>
                 <div className="flex gap-3 items-center">
