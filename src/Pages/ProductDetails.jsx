@@ -6,6 +6,7 @@ import axios from "axios";
 import useAuth from "../Hooks/useAuth";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import Swal from "sweetalert2";
+import toast, { Toaster } from "react-hot-toast";
 const ProductDetails = () => {
   const { data } = useLoaderData();
   const modalBox = useRef("");
@@ -25,6 +26,7 @@ const ProductDetails = () => {
     user_name,
     user_email,
     minimum_selling_quantity,
+    quantity,
   } = data;
 
   useEffect(() => {
@@ -55,8 +57,12 @@ const ProductDetails = () => {
   const [quantityValue, setQuantityValue] = useState(min_quantity);
 
   const incrementQuantity = () => {
-    setQuantityValue((prev) => prev + 1);
     setQuantityErr(null);
+    if (quantity < quantityValue) {
+      setQuantityErr("Out of stock");
+    } else {
+      setQuantityValue((prev) => prev + 1);
+    }
   };
 
   const decrementQuantity = () => {
@@ -71,7 +77,11 @@ const ProductDetails = () => {
 
   const handleCheckout = (e) => {
     e.preventDefault();
-
+    if (quantityErr) {
+      return toast.error(
+        "This product maybe out of stock or you are trying to buy less then minium quantity"
+      );
+    }
     const form = e.target;
     const formData = new FormData(form);
     const formFields = Object.fromEntries(formData.entries());
@@ -136,6 +146,9 @@ const ProductDetails = () => {
                     You have to buy Minimum - {minimum_selling_quantity} Units
                   </span>
                 </div>
+                <div>
+                  <span className="">Available In Stock {quantity} units</span>
+                </div>
                 <div className="p-5 shadow inline-block bg-slate-50 rounded mt-5">
                   <h3 className="text-lg">Seller Details</h3>
                   <hr />
@@ -164,6 +177,7 @@ const ProductDetails = () => {
 
       {/* Modal */}
       <dialog ref={modalBox} id="my_modal_7" className="modal overflow-scroll">
+        <Toaster></Toaster>
         <div
           className={`bg-slate-100
                     p-5 rounded-sm space-y-5 my-10 max-w-6xl  relative`}>

@@ -41,12 +41,12 @@ const Cart = () => {
   return (
     <>
       <title>Cart</title>
-      <div className="max-w-5xl mx-auto space-y-5 my-10">
+      <div className="max-w-5xl mx-auto space-y-5 my-10 px-5 lg:px-0">
         {cart.length > 0 ? (
           cart.map((cartInfo) => (
             <div
               key={cartInfo._id}
-              className="flex gap-5 shadow p-5 border-3 border-primary border-dashed rounded bg-slate-100">
+              className="sm:flex gap-5 shadow p-5 border-3 border-primary border-dashed rounded bg-slate-100 ">
               <img
                 className="w-[250px] h-[250px] rounded shadow"
                 src={cartInfo.image_url}

@@ -71,79 +71,94 @@ const MyProducts = () => {
     <>
       <title>My Products</title>
       <div className="max-w-7xl mx-auto my-10 ">
-        <div className="overflow-x-auto">
-          <table className="table">
-            {/* head */}
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>Product Name</th>
-                <th>Price</th>
-                <th>Available In Stock</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* row  */}
+        {products.length > 0 ? (
+          <div className="overflow-x-auto">
+            <table className="table">
+              {/* head */}
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Product Name</th>
+                  <th>Price</th>
+                  <th>Available In Stock</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* row  */}
 
-              {products.map((product, i) => (
-                <tr key={product._id}>
-                  <th>{i + 1}</th>
-                  <td>
-                    <div className="flex items-center gap-3">
-                      <div className="avatar">
-                        <div className="mask mask-squircle h-12 w-12">
-                          <img src={product?.image_url} />
+                {products.map((product, i) => (
+                  <tr key={product._id}>
+                    <th>{i + 1}</th>
+                    <td>
+                      <div className="flex items-center gap-3">
+                        <div className="avatar">
+                          <div className="mask mask-squircle h-12 w-12">
+                            <img src={product?.image_url} />
+                          </div>
+                        </div>
+                        <div>
+                          <div className="font-bold text-xl"></div>
+                          <div className="text-sm ">
+                            {product?.product_name}
+                          </div>
                         </div>
                       </div>
-                      <div>
-                        <div className="font-bold text-xl"></div>
-                        <div className="text-sm ">{product?.product_name}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <span className="text-lg badge badge-ghost badge-sm  ">
-                      {product?.price} BDT
-                    </span>
-                  </td>
-                  <td>{product?.quantity}</td>
-                  <th className="space-x-3">
-                    <button>
-                      <Link
-                        to={`/product/${product._id}`}
+                    </td>
+                    <td>
+                      <span className="text-lg badge badge-ghost badge-sm  ">
+                        {product?.price} BDT
+                      </span>
+                    </td>
+                    <td>{product?.quantity}</td>
+                    <th className="space-x-3">
+                      <button>
+                        <Link
+                          to={`/product/${product._id}`}
+                          className=" border-none btn-xs">
+                          <FaEye
+                            color="green"
+                            title="Edit this Group information"
+                            size={26}
+                          />
+                        </Link>
+                      </button>
+                      <button
+                        onClick={() => openModal(product._id)}
                         className=" border-none btn-xs">
-                        <FaEye
-                          color="green"
+                        <FaEdit
+                          color="gray"
                           title="Edit this Group information"
                           size={26}
                         />
-                      </Link>
-                    </button>
-                    <button
-                      onClick={() => openModal(product._id)}
-                      className=" border-none btn-xs">
-                      <FaEdit
-                        color="gray"
-                        title="Edit this Group information"
-                        size={26}
-                      />
-                    </button>
-                    <button
-                      onClick={() => handleDeleteProduct(product._id)}
-                      className=" border-none btn-xs">
-                      <MdDeleteOutline
-                        color="red"
-                        title="Are you want to delete this ?"
-                        size={26}
-                      />
-                    </button>
-                  </th>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                      </button>
+                      <button
+                        onClick={() => handleDeleteProduct(product._id)}
+                        className=" border-none btn-xs">
+                        <MdDeleteOutline
+                          color="red"
+                          title="Are you want to delete this ?"
+                          size={26}
+                        />
+                      </button>
+                    </th>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="flex items-center justify-center h-[300px] ">
+            <div className="text-center space-y-5">
+              <h1 className="text-3xl">You havent Uploaded any product</h1>
+              <Link
+                className="btn btn-primary text-white border-none"
+                to={"/add-product"}>
+                Add Product
+              </Link>
+            </div>
+          </div>
+        )}
 
         {/* Modal */}
         <dialog
