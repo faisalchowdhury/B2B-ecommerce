@@ -27,6 +27,7 @@ const ProductDetails = () => {
     user_email,
     minimum_selling_quantity,
     quantity,
+    short_description,
   } = data;
 
   useEffect(() => {
@@ -113,11 +114,11 @@ const ProductDetails = () => {
                 <img className="w-full" src={image_url} alt="" />
               </div>
 
-              <div className="mt-6 sm:mt-8 lg:mt-0">
+              <div className="mt-6 sm:mt-8 lg:mt-0 space-y-2">
                 <h1 className="text-xl font-semibold text-gray-900 sm:text-2xl ">
                   {product_name}
                 </h1>
-                <div className="mt-4 sm:items-center sm:gap-4 sm:flex">
+                <div className="mt-4 sm:items-center sm:gap-4 sm:flex ">
                   <p className="text-2xl font-extrabold text-gray-900 sm:text-3xl ">
                     BDT {price}
                   </p>
@@ -148,6 +149,11 @@ const ProductDetails = () => {
                 </div>
                 <div>
                   <span className="">Available In Stock {quantity} units</span>
+                </div>
+                <div>
+                  <span className="font-semibold">
+                    Short Description - {short_description} units
+                  </span>
                 </div>
                 <div className="p-5 shadow inline-block bg-slate-50 rounded mt-5">
                   <h3 className="text-lg">Seller Details</h3>

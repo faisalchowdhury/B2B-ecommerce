@@ -1,17 +1,25 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import axios from "axios";
 import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 const AddProduct = () => {
   const { user } = useContext(AuthContext);
   const textArea = useRef("");
+
+  const ratingControl = useRef(null);
+
   const handleCreateProduct = (event) => {
     event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
     const { ...formFields } = Object.fromEntries(formData);
     const textAreaData = textArea.current.value;
+
+    if (ratingControl.current.value < 1 || ratingControl.current.value > 5) {
+      return toast.error("Rating Must be between 1-5");
+    }
 
     const data = {
       ...formFields,
@@ -125,7 +133,7 @@ const AddProduct = () => {
             <div>
               <label htmlFor="">Rating</label>
               <input
-                required
+                ref={ratingControl}
                 name="rating"
                 type="number"
                 placeholder="Rating"

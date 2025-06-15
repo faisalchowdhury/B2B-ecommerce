@@ -3,11 +3,17 @@ import { Rating, Star } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import { Link, useLoaderData } from "react-router";
 import axios from "axios";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaTable } from "react-icons/fa";
 import useAuth from "../Hooks/useAuth";
 
 import toast, { Toaster } from "react-hot-toast";
-import { MdDeleteOutline } from "react-icons/md";
+import {
+  MdCheckBoxOutlineBlank,
+  MdDeleteOutline,
+  MdMenu,
+  MdOutlineTableRows,
+} from "react-icons/md";
+
 import Swal from "sweetalert2";
 
 const AllProducts = () => {
@@ -16,7 +22,30 @@ const AllProducts = () => {
   const { user } = useAuth();
   const modalBox = useRef("");
   const textArea = useRef("");
+  const ratingControl = useRef(null);
   const [updateProductData, setUpdateProductData] = useState({});
+
+  //  View
+  const findView = localStorage.getItem("view");
+
+  const [view, setView] = useState(findView);
+
+  useEffect(() => {
+    if (!findView) {
+      localStorage.setItem("view", "card");
+      setView("card");
+    }
+  }, []);
+
+  const tableView = () => {
+    localStorage.setItem("view", "table");
+    setView("table");
+  };
+
+  const cardView = () => {
+    localStorage.setItem("view", "card");
+    setView("card");
+  };
 
   const handleUpdateProduct = (id) => {
     event.preventDefault();
@@ -29,6 +58,9 @@ const AllProducts = () => {
       description: textAreaData,
     };
 
+    if (ratingControl.current.value < 1 || ratingControl.current.value > 5) {
+      return toast.error("Rating Must be between 1-5");
+    }
     axios
       .put(`http://localhost:3000/update-product/${id}`, data)
       .then((res) => {
@@ -71,73 +103,160 @@ const AllProducts = () => {
   return (
     <>
       <title>All Products</title>
+
       <div className="max-w-7xl mx-auto my-10 space-y-5 px-5 sm:px-0">
         <h2 className="text-xl font-medium">All Products</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 ">
-          {products.map((product) => (
-            <div key={product._id}>
-              <div>
-                <div className="relative flex w-full h-[400px]  flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md ">
-                  <div
-                    className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl"
-                    href="#">
-                    <img
-                      className=" w-full"
-                      src={product.image_url}
-                      alt="product image"
-                    />
-                    <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
-                      Min Quantity {product.minimum_selling_quantity}
-                    </span>
-                  </div>
-                  <div className="mt-4 px-5 pb-5">
-                    <h5 className="text-xl tracking-tight text-slate-900">
-                      {product.product_name}
-                    </h5>
-
-                    <div className="mt-2 mb-5 flex items-center justify-between">
-                      <p>
-                        <span className="text-xl font-bold text-slate-900">
-                          BDT {product.price}
-                        </span>
-                      </p>
-                      <div className="flex items-center">
-                        <Rating
-                          style={{ maxWidth: 80 }}
-                          readOnly={true}
-                          itemStyles={myStyles}
-                          value={product.rating}
-                        />
-                        <span className="mr-2 ml-3 rounded bg-yellow-500 px-2.5 py-0.5 text-xs font-semibold">
-                          {product.rating}
-                        </span>
-                      </div>
+        <div className="p-5 rounded-lg shadow-lg flex justify-between">
+          <div>
+            <p className="font-semibold">Set View</p>
+          </div>
+          <div className="flex gap-3 items-center">
+            <button title="Card View" onClick={cardView}>
+              <MdCheckBoxOutlineBlank size={26} className="hover:cursor-grab" />
+            </button>
+            <button title="Table View" onClick={tableView}>
+              <MdMenu size={26} className="hover:cursor-grab" />
+            </button>
+          </div>
+        </div>
+        {view == "card" ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 ">
+            {products.map((product) => (
+              <div key={product._id}>
+                <div>
+                  <div className="relative flex w-full h-[450px]  flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md ">
+                    <div
+                      className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl"
+                      href="#">
+                      <img
+                        className=" w-full"
+                        src={product.image_url}
+                        alt="product image"
+                      />
+                      <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
+                        Min Quantity {product.minimum_selling_quantity}
+                      </span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Link
-                        to={`/product/${product._id}`}
-                        className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
-                        View Details
-                      </Link>
+                    <div className="mt-4 px-5 pb-5">
+                      <h5 className="text-xl tracking-tight text-slate-900">
+                        {product.product_name}
+                      </h5>
 
-                      <button
-                        onClick={() => openModal(product._id)}
-                        className="flex items-center justify-center rounded-md bg-yellow-500 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
-                        <FaEdit size={20}></FaEdit>
-                      </button>
+                      <div className="mt-2 mb-5 flex items-center justify-between">
+                        <p>
+                          <span className="text-xl font-bold text-slate-900">
+                            BDT {product.price}
+                          </span>
+                        </p>
+                        <div className="flex items-center">
+                          <Rating
+                            style={{ maxWidth: 80 }}
+                            readOnly={true}
+                            itemStyles={myStyles}
+                            value={product.rating}
+                          />
+                          <span className="mr-2 ml-3 rounded bg-yellow-500 px-2.5 py-0.5 text-xs font-semibold">
+                            {product.rating}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="pb-5">
+                        <p>{product.short_description}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Link
+                          to={`/product/${product._id}`}
+                          className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
+                          View Details
+                        </Link>
 
-                      <button
-                        onClick={() => handleDeleteProduct(product._id)}
-                        className="flex items-center justify-center rounded-md bg-red-500 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
-                        <MdDeleteOutline size={20} />
-                      </button>
+                        <button
+                          onClick={() => openModal(product._id)}
+                          className="flex items-center justify-center rounded-md bg-yellow-500 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
+                          <FaEdit size={20}></FaEdit>
+                        </button>
+
+                        <button
+                          onClick={() => handleDeleteProduct(product._id)}
+                          className="flex items-center justify-center rounded-md bg-red-500 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
+                          <MdDeleteOutline size={20} />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="space-y-5">
+            {products.map((product) => (
+              <div key={product._id}>
+                <div>
+                  <div className=" sm:flex max-w-7xl mx-auto overflow-hidden rounded-lg border-3 border-gray-200 bg-white shadow-md p-5  border-dashed items-center gap-5">
+                    <div
+                      className="flex  h-60 sm:w-80 overflow-hidden rounded-xl"
+                      href="#">
+                      <img
+                        className=" w-full"
+                        src={product.image_url}
+                        alt="product image"
+                      />
+                    </div>
+                    <div className="mt-4 px-5 pb-5">
+                      <h5 className="text-xl text-slate-900">
+                        {product.product_name}
+                      </h5>
+                      <span className=" top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
+                        Min Quantity {product.minimum_selling_quantity}
+                      </span>
+                      <div className="mt-2 mb-5 flex items-center justify-between">
+                        <p>
+                          <span className="text-xl font-bold text-slate-900">
+                            BDT {product.price}
+                          </span>
+                        </p>
+                        <div className="flex items-center">
+                          <Rating
+                            style={{ maxWidth: 80 }}
+                            readOnly={true}
+                            itemStyles={myStyles}
+                            value={product.rating}
+                          />
+                          <span className="mr-2 ml-3 rounded bg-yellow-500 px-2.5 py-0.5 text-xs font-semibold">
+                            {product.rating}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="pb-5">
+                        <p>{product.short_description}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Link
+                          to={`/product/${product._id}`}
+                          className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
+                          View Details
+                        </Link>
+
+                        <button
+                          onClick={() => openModal(product._id)}
+                          className="flex items-center justify-center rounded-md bg-yellow-500 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
+                          <FaEdit size={20}></FaEdit>
+                        </button>
+
+                        <button
+                          onClick={() => handleDeleteProduct(product._id)}
+                          className="flex items-center justify-center rounded-md bg-red-500 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
+                          <MdDeleteOutline size={20} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Modal */}
@@ -249,7 +368,7 @@ const AllProducts = () => {
                 <div>
                   <label htmlFor="">Rating</label>
                   <input
-                    required
+                    ref={ratingControl}
                     name="rating"
                     type="number"
                     placeholder="Rating"

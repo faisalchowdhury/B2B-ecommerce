@@ -46,7 +46,7 @@ const Cart = () => {
           cart.map((cartInfo) => (
             <div
               key={cartInfo._id}
-              className="sm:flex gap-5 shadow p-5 border-3 border-primary border-dashed rounded bg-slate-100 ">
+              className="sm:flex gap-5 items-center shadow p-5 border-3 border-primary border-dashed rounded bg-slate-100 ">
               <img
                 className="w-[250px] h-[250px] rounded shadow"
                 src={cartInfo.image_url}
@@ -68,19 +68,21 @@ const Cart = () => {
                   {}
                 </p>
                 <p>Purchase Quantity : {cartInfo?.quantity} units</p>
-                <p>
-                  Description : {cartInfo?.description?.slice(0, 200)}...
-                  <Link
-                    className="text-blue-800"
-                    to={`/product/${cartInfo.product_id}`}>
-                    product details
+                <p>Description : {cartInfo?.short_description}</p>
+
+                <div className="space-x-3">
+                  <Link to={`/product/${cartInfo.product_id}`}>
+                    <button className="btn bg-primary text-white hover:bg-blue-950 rounded border-0">
+                      Product details
+                    </button>
                   </Link>
-                </p>
-                <button
-                  onClick={() => handleRemoveFromCart(cartInfo?._id)}
-                  className="btn bg-red-600 text-white hover:bg-blue-950 rounded">
-                  Remove Product
-                </button>
+
+                  <button
+                    onClick={() => handleRemoveFromCart(cartInfo?._id)}
+                    className="btn bg-red-600 text-white hover:bg-blue-950 rounded border-0">
+                    Remove Product
+                  </button>
+                </div>
               </div>
             </div>
           ))
