@@ -179,6 +179,16 @@ const AddProduct = () => {
                 />
               </div>
               <div className="md:col-span-3 ">
+                <label htmlFor="">Short Description</label>
+                <input
+                  required
+                  name="short_description"
+                  type="text"
+                  placeholder="Short Description"
+                  className="input border border-slate-300 rounded-full w-full"
+                />
+              </div>
+              <div className="md:col-span-3 ">
                 <label htmlFor="">Description</label>
                 <textarea
                   required

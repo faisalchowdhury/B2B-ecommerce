@@ -126,7 +126,7 @@ const AllProducts = () => {
   useEffect(() => {
     if (filter) {
       const filteredProducts = allProducts.filter(
-        (product) => product.minimum_selling_quantity >= 100
+        (product) => product.minimum_selling_quantity > 100
       );
       setProducts(filteredProducts);
     } else {
@@ -457,6 +457,17 @@ const AllProducts = () => {
                     placeholder="Image Url"
                     className="input border border-slate-300 rounded-full w-full"
                     defaultValue={updateProductData.image_url}
+                  />
+                </div>
+                <div className="md:col-span-3 ">
+                  <label htmlFor="">Short Description</label>
+                  <input
+                    required
+                    name="short_description"
+                    type="text"
+                    placeholder="Short Description"
+                    className="input border border-slate-300 rounded-full w-full"
+                    defaultValue={updateProductData.short_description}
                   />
                 </div>
                 <div className="md:col-span-3 ">

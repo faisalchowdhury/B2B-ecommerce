@@ -37,3 +37,5 @@ This project uses the following main packages:
 | **SweetAlert2**            | ^11.22.0 | Alert modals                  |
 
 ---
+
+Live URL - https://b2b-wholesale-4c968.web.app/

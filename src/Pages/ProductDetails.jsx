@@ -153,7 +153,7 @@ const ProductDetails = () => {
                 </div>
                 <div>
                   <span className="font-semibold">
-                    Short Description - {short_description} units
+                    Short Description - {short_description}
                   </span>
                 </div>
                 <div className="p-5 shadow inline-block bg-slate-50 rounded mt-5">
