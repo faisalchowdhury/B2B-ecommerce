@@ -3,7 +3,7 @@ import { Rating, Star } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import { Link } from "react-router";
 import axios from "axios";
-import { FaEdit } from "react-icons/fa";
+import { FaBuromobelexperte, FaEdit, FaList } from "react-icons/fa";
 import useAuth from "../Hooks/useAuth";
 
 import toast, { Toaster } from "react-hot-toast";
@@ -24,12 +24,19 @@ const AllProducts = () => {
   const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState(false);
   const axiosInstance = useAxios();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    axiosInstance.get(`/products`).then((res) => {
-      setAllProducts(res.data);
-      setProducts(res.data);
-    });
+    setLoading(true); // Start loading
+    axiosInstance
+      .get(`/products`)
+      .then((res) => {
+        setAllProducts(res.data);
+        setProducts(res.data);
+      })
+      .finally(() => {
+        setLoading(false); // Always stop loading
+      });
   }, []);
 
   const modalBox = useRef("");
@@ -73,13 +80,11 @@ const AllProducts = () => {
     if (ratingControl.current.value < 1 || ratingControl.current.value > 5) {
       return toast.error("Rating Must be between 1-5");
     }
-    axios
-      .put(`https://b2b-server-five.vercel.app/update-product/${id}`, data)
-      .then((res) => {
-        if (res.data.modifiedCount) {
-          toast.success("Data Updated Successfully");
-        }
-      });
+    axiosInstance.put(`/update-product/${id}`, data).then((res) => {
+      if (res.data.modifiedCount) {
+        toast.success("Data Updated Successfully");
+      }
+    });
   };
 
   const myStyles = {
@@ -129,7 +134,9 @@ const AllProducts = () => {
     }
   }, [filter, allProducts]);
 
-  return (
+  return loading ? (
+    <Loading></Loading>
+  ) : (
     <>
       <title>All Products</title>
 
@@ -154,10 +161,10 @@ const AllProducts = () => {
           <div className="flex gap-3 items-center">
             <p className="font-semibold">Set View</p>
             <button title="Card View" onClick={cardView}>
-              <MdCheckBoxOutlineBlank size={26} className="hover:cursor-grab" />
+              <FaBuromobelexperte size={26} className="hover:cursor-grab" />
             </button>
             <button title="Table View" onClick={tableView}>
-              <MdMenu size={26} className="hover:cursor-grab" />
+              <FaList size={26} className="hover:cursor-grab" />
             </button>
           </div>
         </div>

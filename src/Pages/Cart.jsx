@@ -4,18 +4,22 @@ import axios from "axios";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 import useAxios from "../Hooks/useAxios";
-
+import Loading from "../Components/Loading";
 const Cart = () => {
   const { user } = useAuth();
   const [cart, setCart] = useState([]);
   const axiosInstance = useAxios();
   const [categories, setCategories] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
+    setLoading(true);
     axiosInstance
       .get(`https://b2b-server-five.vercel.app/cart?email=${user.email}`)
       .then((res) => {
         setCart(res.data);
+      })
+      .finally(() => {
+        setLoading(false);
       });
 
     axios
@@ -44,7 +48,9 @@ const Cart = () => {
     });
   };
 
-  return (
+  return loading ? (
+    <Loading></Loading>
+  ) : (
     <>
       <title>Cart</title>
       <div className="max-w-5xl mx-auto space-y-5 my-10 px-5 lg:px-0">

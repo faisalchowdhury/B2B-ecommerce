@@ -7,6 +7,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import Swal from "sweetalert2";
 import toast, { Toaster } from "react-hot-toast";
 import useAxios from "../Hooks/useAxios";
+import Loading from "../Components/Loading";
 
 const MyProducts = () => {
   const { user } = useAuth();
@@ -15,13 +16,18 @@ const MyProducts = () => {
   const axiosInstance = useAxios();
   const modalBox = useRef("");
   const textArea = useRef("");
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
+    setLoading(true);
     axiosInstance
       .get(
         `https://b2b-server-five.vercel.app/my-products?email=${user?.email}`
       )
       .then((res) => {
         setProducts(res.data);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -73,7 +79,9 @@ const MyProducts = () => {
         }
       });
   };
-  return (
+  return loading ? (
+    <Loading></Loading>
+  ) : (
     <>
       <title>My Products</title>
       <div className="max-w-7xl mx-auto my-10 ">

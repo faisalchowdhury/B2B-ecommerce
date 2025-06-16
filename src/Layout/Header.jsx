@@ -44,31 +44,31 @@ const Header = () => {
       <div className="bg-black text-white px-5 ">
         <div className="flex justify-between max-w-7xl mx-auto py-3 ">
           <div className="flex gap-3">
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-2  text-sm">
               <FaEnvelope></FaEnvelope> info@dealcraft.com
             </span>
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-2  text-sm">
               <FaPhone></FaPhone> +01010152112
             </span>
           </div>
-          <div className="flex gap-5">
+          <div className="flex gap-3">
             <a
               href="https://www.facebook.com/faisal.ahmed.chowdhury.336926/"
               target="_blank">
-              <FaFacebook size={22} color=""></FaFacebook>
+              <FaFacebook size={20} color=""></FaFacebook>
             </a>
             <a href="https://instagram.com" target="_blank">
-              <FaInstagram size={22} color=""></FaInstagram>
+              <FaInstagram size={20} color=""></FaInstagram>
             </a>
             <a href="https://youtube.com" target="_blank">
-              <FaYoutube size={22} color=""></FaYoutube>
+              <FaYoutube size={20} color=""></FaYoutube>
             </a>
           </div>
         </div>
       </div>
       <div className="bg-slate-100 py-3 sticky top-0 z-10">
-        <div className="navbar bg-base-100 max-w-7xl mx-auto">
-          <div className="navbar-start">
+        <div className=" flex flex-col sm:flex-row justify-between gap-5 bg-base-100 max-w-7xl mx-auto px-5 lg:px-0">
+          <div className="flex justify-between sm:justify-start  items-center">
             <div className="dropdown">
               <div
                 tabIndex={0}
@@ -99,13 +99,15 @@ const Header = () => {
               <img className="w-[150px]" src={logo} alt="" />
             </Link>
           </div>
-          <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal px-1 space-x-3 text-md font-medium ">
-              {menu}
-            </ul>
-          </div>
-          <div className="navbar-end text-lg space-x-3 flex items-center">
-            <Link to={"/cart"}>
+
+          <div className=" text-lg space-x-3 flex  justify-between sm:justify-start items-center">
+            <div className=" hidden lg:flex">
+              <ul className="menu menu-horizontal px-1 space-x-3 text-md font-medium ">
+                {menu}
+              </ul>
+            </div>
+
+            <Link className="btn btn-ghost" to={"/cart"}>
               <MdOutlineShoppingBag size={26} />
             </Link>
             {!user ? (
