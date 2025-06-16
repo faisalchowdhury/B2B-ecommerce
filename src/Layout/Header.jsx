@@ -2,8 +2,6 @@ import React, { useContext } from "react";
 import logo from "../assets/logo.png";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "../Context/AuthContext";
-import { signOut } from "firebase/auth";
-import { auth } from "../Firebase/firebase";
 import { Tooltip } from "react-tooltip";
 import { Toaster } from "react-hot-toast";
 import { MdOutlineShoppingBag } from "react-icons/md";
@@ -16,7 +14,7 @@ import {
 } from "react-icons/fa";
 
 const Header = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logoutUser } = useContext(AuthContext);
 
   const menu = (
     <>
@@ -115,7 +113,7 @@ const Header = () => {
                   </Tooltip>
                   <button
                     className="btn bg-gray-950 border-none text-white px-10 rounded-full hover:bg-black text-lg shadow"
-                    onClick={() => signOut(auth)}>
+                    onClick={logoutUser}>
                     Logout
                   </button>
                 </div>

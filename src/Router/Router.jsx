@@ -16,6 +16,7 @@ import Categories from "../Pages/Categories";
 import MyProducts from "../Pages/MyProducts";
 import Loading from "../Components/Loading";
 import Cart from "../Pages/Cart";
+import useAuth from "../Hooks/useAuth";
 
 export const router = createBrowserRouter([
   {
@@ -72,7 +73,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/products",
-        loader: () => axios.get(`http://localhost:3000/products`),
+        // loader: () =>
+        //   axios.get(`http://localhost:3000/products`, {
+        //     withCredentials: true,
+        //   }),
+
         element: (
           <PrivateRoute>
             <AllProducts></AllProducts>

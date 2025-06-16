@@ -11,14 +11,26 @@ import {
   MdCheckBoxOutlineBlank,
   MdDeleteOutline,
   MdMenu,
-  MdOutlineTableRows,
 } from "react-icons/md";
 
 import Swal from "sweetalert2";
 
 const AllProducts = () => {
-  const { data } = useLoaderData();
-  const [products, setProducts] = useState(data);
+  const [allProducts, setAllProducts] = useState([]);
+
+  const [products, setProducts] = useState([]);
+  const [filter, setFilter] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/products`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setAllProducts(res.data);
+        setProducts(res.data);
+      });
+  }, []);
   const { user } = useAuth();
   const modalBox = useRef("");
   const textArea = useRef("");
@@ -102,18 +114,16 @@ const AllProducts = () => {
 
   // Filter Products
 
-  const [filter, setFilter] = useState(false);
-
   useEffect(() => {
     if (filter) {
-      const filteredProducts = products.filter(
+      const filteredProducts = allProducts.filter(
         (product) => product.minimum_selling_quantity >= 100
       );
       setProducts(filteredProducts);
     } else {
-      setProducts(data);
+      setProducts(allProducts);
     }
-  }, [filter]);
+  }, [filter, allProducts]);
 
   return (
     <>
