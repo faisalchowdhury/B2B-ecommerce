@@ -31,7 +31,7 @@ const ProductDetails = () => {
   } = data;
 
   useEffect(() => {
-    axios.get("http://localhost:3000/categories").then((res) => {
+    axios.get("https://b2b-server-five.vercel.app/categories").then((res) => {
       const currentCat = res.data.find((cat) => cat.slug === category);
       setProductCategory(currentCat);
     });
@@ -47,7 +47,7 @@ const ProductDetails = () => {
   const openModal = (id) => {
     modalBox.current.showModal();
     // axios
-    //   .get(`http://localhost:3000/product/${id}`)
+    //   .get(`https://b2b-server-five.vercel.app/product/${id}`)
     //   .then((res) => setUpdateProductData(res.data));
   };
 
@@ -89,19 +89,20 @@ const ProductDetails = () => {
     formFields.quantity = quantityValue;
     formFields.product_id = _id;
 
-    axios.post("http://localhost:3000/add-to-cart", formFields).then((res) => {
-      if (res.data.insertedId) {
-        modalBox.current.close();
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Your order has been successfully placed",
-          showConfirmButton: false,
-          timer: 3000,
-        });
-      }
-      console.log(res.data);
-    });
+    axios
+      .post("https://b2b-server-five.vercel.app/add-to-cart", formFields)
+      .then((res) => {
+        if (res.data.insertedId) {
+          modalBox.current.close();
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Your order has been successfully placed",
+            showConfirmButton: false,
+            timer: 3000,
+          });
+        }
+      });
   };
   return (
     <>

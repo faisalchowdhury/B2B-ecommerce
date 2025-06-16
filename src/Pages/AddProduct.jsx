@@ -26,9 +26,9 @@ const AddProduct = () => {
       ...formFields,
       description: textAreaData,
     };
-    console.log(data);
+
     axiosInstance
-      .post("http://localhost:3000/add-product", data)
+      .post("https://b2b-server-five.vercel.app/add-product", data)
       .then((res) => {
         if (res.data.acknowledged) {
           Swal.fire({

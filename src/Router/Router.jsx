@@ -25,12 +25,14 @@ export const router = createBrowserRouter([
       {
         index: true,
         Component: Home,
-        loader: () => axios.get("http://localhost:3000/categories-limit"),
+        loader: () =>
+          axios.get("https://b2b-server-five.vercel.app/categories-limit"),
         hydrateFallbackElement: <Loading></Loading>,
       },
       {
         path: "categories",
-        loader: ({ params }) => axios.get(`http://localhost:3000/categories`),
+        loader: ({ params }) =>
+          axios.get(`https://b2b-server-five.vercel.app/categories`),
         element: <Categories></Categories>,
         hydrateFallbackElement: <Loading></Loading>,
       },
@@ -54,7 +56,9 @@ export const router = createBrowserRouter([
         path: "category/:category",
         Component: CategoryProduct,
         loader: ({ params }) =>
-          axios.get(`http://localhost:3000/category/${params.category}`),
+          axios.get(
+            `https://b2b-server-five.vercel.app/category/${params.category}`
+          ),
         hydrateFallbackElement: <Loading></Loading>,
       },
 
@@ -66,7 +70,7 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          axios.get(`http://localhost:3000/product/${params.id}`),
+          axios.get(`https://b2b-server-five.vercel.app/product/${params.id}`),
         hydrateFallbackElement: <Loading></Loading>,
       },
       {

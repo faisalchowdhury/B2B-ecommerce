@@ -10,16 +10,16 @@ const Cart = () => {
   const [cart, setCart] = useState([]);
   const axiosInstance = useAxios();
   const [categories, setCategories] = useState([]);
-  console.log(cart);
+
   useEffect(() => {
     axiosInstance
-      .get(`http://localhost:3000/cart?email=${user.email}`)
+      .get(`https://b2b-server-five.vercel.app/cart?email=${user.email}`)
       .then((res) => {
         setCart(res.data);
       });
 
     axios
-      .get(`http://localhost:3000/categories`)
+      .get(`https://b2b-server-five.vercel.app/categories`)
       .then((res) => setCategories(res.data));
   }, []);
 
@@ -32,12 +32,14 @@ const Cart = () => {
       denyButtonText: `Don't Delete`,
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:3000/delete-cart/${id}`).then((res) => {
-          if (res.data.deletedCount) {
-            const newCart = cart.filter((cartData) => cartData._id != id);
-            setCart(newCart);
-          }
-        });
+        axios
+          .delete(`https://b2b-server-five.vercel.app/delete-cart/${id}`)
+          .then((res) => {
+            if (res.data.deletedCount) {
+              const newCart = cart.filter((cartData) => cartData._id != id);
+              setCart(newCart);
+            }
+          });
       }
     });
   };

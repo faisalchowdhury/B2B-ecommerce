@@ -41,7 +41,7 @@ const Header = () => {
   return (
     <>
       <Toaster />
-      <div className="bg-black text-white">
+      <div className="bg-black text-white px-5 ">
         <div className="flex justify-between max-w-7xl mx-auto py-3 ">
           <div className="flex gap-3">
             <span className="flex items-center gap-2">
