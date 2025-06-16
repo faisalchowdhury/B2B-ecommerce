@@ -88,7 +88,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="py-6 text-sm text-center dark:text-gray-600">
-          © 2025 Hobbynest. All rights reserved.
+          © 2025 Deal Craft. All rights reserved.
         </div>
       </footer>
     </div>
