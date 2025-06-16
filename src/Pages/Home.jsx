@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { motion } from "framer-motion";
 import Slider from "../Components/Slider";
 import newsLetterAnimation from "../assets/Lottie-animation/newsletter.json";
 import Lottie from "lottie-react";
@@ -18,6 +18,45 @@ const Home = () => {
       .get("http://localhost:3000/new-arrival-products")
       .then((res) => setArrival(res.data));
   }, []);
+
+  // Service Data
+
+  const serviceData = [
+    {
+      img: delivery,
+      title: "Fast Delivery",
+      description: "Quick & Reliable Shipping Across the Nation",
+    },
+    {
+      img: support,
+      title: "24/7 Support",
+      description: "We're Always Here to Help, Anytime You Need Us",
+    },
+    {
+      img: card,
+      title: "Secure Payment",
+      description: "Multiple Payment Options with Full Protection",
+    },
+    {
+      img: like,
+      title: "Trusted by Shoppers",
+      description: "Rated High for Satisfaction & Quality Service",
+    },
+  ];
+  // Animation
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: (i) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: 2,
+        duration: 0.5,
+        ease: "easeOut",
+      },
+    }),
+    exit: { opacity: 0, y: 50, transition: { duration: 0.3 } },
+  };
   return (
     <>
       <title>Home</title>
@@ -83,53 +122,34 @@ const Home = () => {
           {/* New Arrival */}
           {/* Service */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 py-20 gap-5">
-            <div className="flex gap-5 p-5 items-center shadow bg-slate-50 rounded hover:shadow-xl border-2 border-dashed">
-              <div className="p-5 border-r-1">
-                <img className="w-[80px]" src={delivery} alt="" />
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold">Fast Delivery</h2>
-                <p className="text-slate-700">
-                  Quick & Reliable Shipping Across the Nation
-                </p>
-              </div>
-            </div>
-
-            <div className="flex gap-5 p-5 items-center shadow bg-slate-50 rounded hover:shadow-xl border-2 border-dashed">
-              <div className="p-5 border-r-1">
-                <img className="w-[80px]" src={support} alt="" />
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold">24/7 Support</h2>
-                <p className="text-slate-700">
-                  We're Always Here to Help, Anytime You Need Us
-                </p>
-              </div>
-            </div>
-
-            <div className="flex gap-5 p-5 items-center shadow bg-slate-50 rounded hover:shadow-xl border-2 border-dashed">
-              <div className="p-5 border-r-1">
-                <img className="w-[80px]" src={card} alt="" />
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold">Secure payment</h2>
-                <p className="text-slate-700">
-                  Multiple Payment Options with Full Protection
-                </p>
-              </div>
-            </div>
-
-            <div className="flex gap-5 p-5 items-center shadow bg-slate-50 rounded hover:shadow-xl border-2 border-dashed">
-              <div className="p-5 border-r-1">
-                <img className="w-[80px]" src={like} alt="" />
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold">Trusted by Shoppers</h2>
-                <p className="text-slate-700">
-                  Rated High for Satisfaction & Quality Service
-                </p>
-              </div>
-            </div>
+            {serviceData.map((feature, index) => (
+              <motion.div
+                key={index}
+                className="flex gap-5 p-5 items-center shadow bg-slate-50 rounded hover:shadow-xl border-2 border-dashed"
+                variants={cardVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                custom={index} // Pass index for staggered animation
+                whileHover={{
+                  scale: 1.05,
+                  y: -10,
+                  transition: { duration: 0.2 },
+                }} // Hover effect
+              >
+                <div className="p-5 border-r-1">
+                  <img
+                    className="w-[80px]"
+                    src={feature.img}
+                    alt={feature.title}
+                  />
+                </div>
+                <div>
+                  <h2 className="text-lg font-semibold">{feature.title}</h2>
+                  <p className="text-slate-700">{feature.description}</p>
+                </div>
+              </motion.div>
+            ))}
           </div>
           {/* Service */}
         </div>

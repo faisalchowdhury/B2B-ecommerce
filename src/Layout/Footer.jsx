@@ -4,6 +4,16 @@ import { Link, NavLink } from "react-router";
 import { FaFacebook, FaGithub, FaLinkedin } from "react-icons/fa";
 import paymentOption from "../assets/payment-option.png";
 const Footer = () => {
+  const menu = (
+    <>
+      <NavLink to={"/"}>Home</NavLink>
+      <NavLink to={"/categories"}>Categories </NavLink>
+      <NavLink to={"/products"}>All Products</NavLink>
+      <NavLink to={"/add-product"}>Add Product</NavLink>
+      <NavLink to={"/my-products"}>My Products</NavLink>
+      <NavLink to={"/cart"}>Cart</NavLink>
+    </>
+  );
   return (
     <div className="mt-10">
       <footer className={`bg-gray-100 text-gray-800`}>
@@ -24,15 +34,7 @@ const Footer = () => {
               <h3 className="tracking-wide text-md uppercase ">
                 Important Links
               </h3>
-              <div className="flex flex-col text-md">
-                {" "}
-                <NavLink to={"/"}>Home</NavLink>
-                <NavLink to={"/"}>Categories </NavLink>
-                <NavLink to={"/"}>All Products</NavLink>
-                <NavLink to={"/"}>Add Product</NavLink>
-                <NavLink to={"/"}>My Products</NavLink>
-                <NavLink to={"/"}>Cart</NavLink>
-              </div>
+              <div className="flex flex-col text-md">{menu}</div>
             </div>
             <div className="space-y-3">
               <div className="uppercase text-md ">Payment Method</div>

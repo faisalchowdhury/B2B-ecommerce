@@ -18,12 +18,24 @@ const Header = () => {
 
   const menu = (
     <>
-      <NavLink to={"/"}>Home</NavLink>
-      <NavLink to={"/categories"}>Categories </NavLink>
-      <NavLink to={"/products"}>All Products</NavLink>
-      <NavLink to={"/add-product"}>Add Product</NavLink>
-      <NavLink to={"/my-products"}>My Products</NavLink>
-      <NavLink to={"/cart"}>Cart</NavLink>
+      <NavLink className={"hover:text-primary"} to={"/"}>
+        Home
+      </NavLink>
+      <NavLink className={"hover:text-primary"} to={"/categories"}>
+        Categories{" "}
+      </NavLink>
+      <NavLink className={"hover:text-primary"} to={"/products"}>
+        All Products
+      </NavLink>
+      <NavLink className={"hover:text-primary"} to={"/add-product"}>
+        Add Product
+      </NavLink>
+      <NavLink className={"hover:text-primary"} to={"/my-products"}>
+        My Products
+      </NavLink>
+      <NavLink className={"hover:text-primary"} to={"/cart"}>
+        Cart
+      </NavLink>
     </>
   );
   return (
@@ -40,9 +52,17 @@ const Header = () => {
             </span>
           </div>
           <div className="flex gap-5">
-            <FaFacebook size={22} color=""></FaFacebook>
-            <FaInstagram size={22} color=""></FaInstagram>
-            <FaYoutube size={22} color=""></FaYoutube>
+            <a
+              href="https://www.facebook.com/faisal.ahmed.chowdhury.336926/"
+              target="_blank">
+              <FaFacebook size={22} color=""></FaFacebook>
+            </a>
+            <a href="https://instagram.com" target="_blank">
+              <FaInstagram size={22} color=""></FaInstagram>
+            </a>
+            <a href="https://youtube.com" target="_blank">
+              <FaYoutube size={22} color=""></FaYoutube>
+            </a>
           </div>
         </div>
       </div>
@@ -80,7 +100,7 @@ const Header = () => {
             </Link>
           </div>
           <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal px-1 space-x-3 text-md">
+            <ul className="menu menu-horizontal px-1 space-x-3 text-md font-medium ">
               {menu}
             </ul>
           </div>

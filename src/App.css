@@ -50,3 +50,6 @@
   font-size: 14px !important;
 }
 /* Swiper */
+a.active {
+  color: orange;
+}
