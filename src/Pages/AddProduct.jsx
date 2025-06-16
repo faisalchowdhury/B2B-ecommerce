@@ -3,11 +3,12 @@ import { AuthContext } from "../Context/AuthContext";
 import axios from "axios";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import useAxios from "../Hooks/useAxios";
 
 const AddProduct = () => {
   const { user } = useContext(AuthContext);
   const textArea = useRef("");
-
+  const axiosInstance = useAxios();
   const ratingControl = useRef(null);
 
   const handleCreateProduct = (event) => {
@@ -26,19 +27,21 @@ const AddProduct = () => {
       description: textAreaData,
     };
     console.log(data);
-    axios.post("http://localhost:3000/add-product", data).then((res) => {
-      if (res.data.acknowledged) {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Your Product has been added",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+    axiosInstance
+      .post("http://localhost:3000/add-product", data)
+      .then((res) => {
+        if (res.data.acknowledged) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Your Product has been added",
+            showConfirmButton: false,
+            timer: 1500,
+          });
 
-        form.reset();
-      }
-    });
+          form.reset();
+        }
+      });
   };
   return (
     <>

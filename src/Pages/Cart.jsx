@@ -3,16 +3,20 @@ import useAuth from "../Hooks/useAuth";
 import axios from "axios";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
+import useAxios from "../Hooks/useAxios";
 
 const Cart = () => {
   const { user } = useAuth();
   const [cart, setCart] = useState([]);
+  const axiosInstance = useAxios();
   const [categories, setCategories] = useState([]);
   console.log(cart);
   useEffect(() => {
-    axios.get(`http://localhost:3000/cart?email=${user.email}`).then((res) => {
-      setCart(res.data);
-    });
+    axiosInstance
+      .get(`http://localhost:3000/cart?email=${user.email}`)
+      .then((res) => {
+        setCart(res.data);
+      });
 
     axios
       .get(`http://localhost:3000/categories`)

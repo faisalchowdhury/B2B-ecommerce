@@ -16,7 +16,6 @@ import Categories from "../Pages/Categories";
 import MyProducts from "../Pages/MyProducts";
 import Loading from "../Components/Loading";
 import Cart from "../Pages/Cart";
-import useAuth from "../Hooks/useAuth";
 
 export const router = createBrowserRouter([
   {
@@ -50,7 +49,6 @@ export const router = createBrowserRouter([
             <AddProduct></AddProduct>
           </PrivateRoute>
         ),
-        hydrateFallbackElement: <Loading></Loading>,
       },
       {
         path: "category/:category",
@@ -73,17 +71,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/products",
-        // loader: () =>
-        //   axios.get(`http://localhost:3000/products`, {
-        //     withCredentials: true,
-        //   }),
-
         element: (
           <PrivateRoute>
             <AllProducts></AllProducts>
           </PrivateRoute>
         ),
-        hydrateFallbackElement: <Loading></Loading>,
       },
       {
         path: "my-products",

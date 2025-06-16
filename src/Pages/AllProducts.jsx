@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Rating, Star } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
-import { Link, useLoaderData } from "react-router";
+import { Link } from "react-router";
 import axios from "axios";
-import { FaEdit, FaTable } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
 import useAuth from "../Hooks/useAuth";
 
 import toast, { Toaster } from "react-hot-toast";
@@ -14,24 +14,24 @@ import {
 } from "react-icons/md";
 
 import Swal from "sweetalert2";
+import useAxios from "../Hooks/useAxios";
+import Loading from "../Components/Loading";
 
 const AllProducts = () => {
+  const { user } = useAuth();
   const [allProducts, setAllProducts] = useState([]);
 
   const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState(false);
+  const axiosInstance = useAxios();
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3000/products`, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setAllProducts(res.data);
-        setProducts(res.data);
-      });
+    axiosInstance.get(`/products`).then((res) => {
+      setAllProducts(res.data);
+      setProducts(res.data);
+    });
   }, []);
-  const { user } = useAuth();
+
   const modalBox = useRef("");
   const textArea = useRef("");
   const ratingControl = useRef(null);

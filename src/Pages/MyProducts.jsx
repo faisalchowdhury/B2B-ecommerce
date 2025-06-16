@@ -6,20 +6,20 @@ import { FaEdit, FaEye } from "react-icons/fa";
 import { MdDeleteOutline } from "react-icons/md";
 import Swal from "sweetalert2";
 import toast, { Toaster } from "react-hot-toast";
+import useAxios from "../Hooks/useAxios";
 
 const MyProducts = () => {
   const { user } = useAuth();
   const [products, setProducts] = useState([]);
   const [updateProductData, setUpdateProductData] = useState({});
-
+  const axiosInstance = useAxios();
   const modalBox = useRef("");
   const textArea = useRef("");
   useEffect(() => {
-    axios
+    axiosInstance
       .get(`http://localhost:3000/my-products?email=${user?.email}`)
       .then((res) => {
         setProducts(res.data);
-        console.log(res.data);
       });
   }, []);
 
