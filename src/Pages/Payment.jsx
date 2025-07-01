@@ -3,6 +3,11 @@ import { FaUser, FaEnvelope, FaHome, FaPhone, FaRegCreditCard } from 'react-icon
 import { useParams } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import useAxios from '../Hooks/useAxios';
+
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import Checkout from '../Components/Checkout/Checkout';
+
 export default function Payment() {
 
  const [formData, setFormData] = useState({
@@ -29,7 +34,8 @@ export default function Payment() {
     console.log('Submitting:', formData);
     alert('Payment submitted successfully!');
   };
-
+    
+  const stripePromise = loadStripe("pk_test_51Rg9SKRjZ7l8BlE9V6v58DeVP2TKvUOwwSVee9wrpUTM0DaAx4ow5LHG6S3LtL1cwyZRxG6MS62Nu4DpRANAGN1X00wC7HtsY0");
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
       <div className="bg-white rounded-2xl shadow-lg grid grid-cols-1 md:grid-cols-3 w-full max-w-6xl overflow-hidden">
@@ -74,10 +80,14 @@ export default function Payment() {
             <input type="text" name="phone" placeholder="Phone Number" value={formData.phone} onChange={handleChange} className="w-full p-3 outline-none" required />
           </div>
 
-          <div className="md:col-span-2">
-            <button type="submit" className="w-full bg-indigo-600 text-white p-3 rounded-lg font-semibold hover:bg-indigo-700 transition">Submit Payment</button>
-          </div>
+         
         </form>
+
+         <div className="md:col-span-2">
+            <Elements stripe={stripePromise}>
+         <Checkout></Checkout>
+           </Elements>
+          </div>
       </div>
     </div>
   );
