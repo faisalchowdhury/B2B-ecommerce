@@ -4,9 +4,10 @@ import useAuth from "./useAuth";
 import { useNavigate } from "react-router";
 
 const useAxios = () => {
+  // https://b2b-server-five.vercel.app
   const { user } = useAuth();
   const axiosInstance = axios.create({
-    baseURL: "https://b2b-server-five.vercel.app",
+    baseURL: "http://localhost:3000",
     headers: { "user-email": user?.email },
     withCredentials: true,
   });

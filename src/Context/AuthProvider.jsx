@@ -48,7 +48,7 @@ const AuthProvider = ({ children }) => {
       if (currentUser?.email) {
         axios
           .post(
-            "https://b2b-server-five.vercel.app/jwt",
+            "http://localhost:3000/jwt",
             { email: currentUser.email },
             {
               withCredentials: true,
@@ -69,7 +69,7 @@ const AuthProvider = ({ children }) => {
     signOut(auth).then(() =>
       axios
         .post(
-          "https://b2b-server-five.vercel.app/logout",
+          "http://localhost:3000/logout",
           {},
           { withCredentials: true }
         )

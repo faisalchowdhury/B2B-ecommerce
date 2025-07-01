@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
   };
   useEffect(() => {
     axios
-      .get("https://b2b-server-five.vercel.app/categories-limit")
+      .get("http://localhost:3000/categories-limit")
       .then((res) => {
         const currentCat = res.data.find(
           (cat) => cat.slug === product.category

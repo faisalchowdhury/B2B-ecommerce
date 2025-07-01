@@ -15,7 +15,7 @@ const Home = () => {
   const [arrival, setArrival] = useState([]);
   useEffect(() => {
     axios
-      .get("https://b2b-server-five.vercel.app/new-arrival-products")
+      .get("http://localhost:3000/new-arrival-products")
       .then((res) => setArrival(res.data));
   }, []);
 

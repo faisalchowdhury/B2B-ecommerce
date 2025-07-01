@@ -14,7 +14,7 @@ const Cart = () => {
   useEffect(() => {
     setLoading(true);
     axiosInstance
-      .get(`https://b2b-server-five.vercel.app/cart?email=${user.email}`)
+      .get(`http://localhost:3000/cart?email=${user.email}`)
       .then((res) => {
         setCart(res.data);
       })
@@ -23,7 +23,7 @@ const Cart = () => {
       });
 
     axios
-      .get(`https://b2b-server-five.vercel.app/categories`)
+      .get(`http://localhost:3000/categories`)
       .then((res) => setCategories(res.data));
   }, []);
 
@@ -37,7 +37,7 @@ const Cart = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`https://b2b-server-five.vercel.app/delete-cart/${id}`)
+          .delete(`http://localhost:3000/delete-cart/${id}`)
           .then((res) => {
             if (res.data.deletedCount) {
               const newCart = cart.filter((cartData) => cartData._id != id);
@@ -94,6 +94,12 @@ const Cart = () => {
                     className="btn bg-red-600 text-white hover:bg-blue-950 rounded border-0">
                     Remove Product
                   </button>
+
+                  <Link to={`/payment/${cartInfo?._id}`}>
+                    <button className="btn bg-green-700 text-white hover:bg-blue-950 rounded border-0">
+                      Pay now
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
