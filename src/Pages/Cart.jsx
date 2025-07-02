@@ -36,14 +36,12 @@ const Cart = () => {
       denyButtonText: `Don't Delete`,
     }).then((result) => {
       if (result.isConfirmed) {
-        axios
-          .delete(`http://localhost:3000/delete-cart/${id}`)
-          .then((res) => {
-            if (res.data.deletedCount) {
-              const newCart = cart.filter((cartData) => cartData._id != id);
-              setCart(newCart);
-            }
-          });
+        axios.delete(`http://localhost:3000/delete-cart/${id}`).then((res) => {
+          if (res.data.deletedCount) {
+            const newCart = cart.filter((cartData) => cartData._id != id);
+            setCart(newCart);
+          }
+        });
       }
     });
   };
@@ -54,6 +52,7 @@ const Cart = () => {
     <>
       <title>Cart</title>
       <div className="max-w-5xl mx-auto space-y-5 my-10 px-5 lg:px-0">
+        <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
         {cart.length > 0 ? (
           cart.map((cartInfo) => (
             <div

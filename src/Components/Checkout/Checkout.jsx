@@ -4,8 +4,13 @@ import React, { useState } from "react";
 import { FaUser, FaEnvelope, FaHome, FaPhone } from "react-icons/fa";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import useAxios from "../../Hooks/useAxios";
+import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router";
+import useAuth from "../../Hooks/useAuth";
+import Swal from "sweetalert2";
 
 export default function Checkout({ cartData }) {
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -16,7 +21,7 @@ export default function Checkout({ cartData }) {
   const elements = useElements();
   const axiosInstance = useAxios();
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -32,7 +37,10 @@ export default function Checkout({ cartData }) {
       setLoading(true);
 
       const { data } = await axiosInstance.post("/create-payment-intent", {
-        amount: parseFloat(cartData.price) * parseInt(cartData.quantity) * 100, // cents
+        amount:
+          parseFloat(cartData?.price * parseInt(cartData?.quantity)).toFixed(
+            2
+          ) * 100, // cents
       });
 
       const clientSecret = data.clientSecret;
@@ -55,7 +63,31 @@ export default function Checkout({ cartData }) {
       } else {
         if (result.paymentIntent.status === "succeeded") {
           console.log("Payment Successful!", result.paymentIntent);
-          alert("Payment Successful!");
+
+          const order = await axiosInstance.post("/add-order", {
+            product_id: cartData.product_id,
+            order_date: new Date().toISOString(),
+            user: user.displayName,
+            user_email: user.email,
+            quantity: cartData.quantity,
+          });
+
+          if (order?.data?.insertedId) {
+            const removeFromCart = await axiosInstance.delete(
+              `/remove-from-cart/${cartData._id}`
+            );
+
+            if (removeFromCart?.data?.deletedCount) {
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Your order has been successfully placed",
+                showConfirmButton: false,
+                timer: 3000,
+              });
+              navigate("/my-orders");
+            }
+          }
         }
       }
     } catch (error) {
@@ -67,26 +99,28 @@ export default function Checkout({ cartData }) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+    <div className="flex items-center justify-center bg-gray-100  py-10">
       <div className="bg-white rounded-2xl shadow-lg grid grid-cols-1 md:grid-cols-3 w-full max-w-6xl overflow-hidden">
         {/* Left: Product Card */}
         <div className="md:col-span-1 flex items-center justify-center p-4">
           <div className="flex bg-white rounded-xl shadow p-4 w-full">
             <img
-              src={cartData.image_url}
+              src={cartData?.image_url}
               alt="Product"
               className="rounded-lg object-cover w-28 h-28 mr-4"
             />
             <div className="flex flex-col justify-between">
-              <h2 className="text-lg font-semibold">{cartData.product_name}</h2>
+              <h2 className="text-lg font-semibold">
+                {cartData?.product_name}
+              </h2>
               <p className="text-gray-500 text-sm">
-                Quantity: {cartData.quantity}
+                Quantity: {cartData?.quantity}
               </p>
-              <p className="text-indigo-600">Price: {cartData.price} Tk</p>
+              <p className="text-indigo-600">Price: {cartData?.price} Tk</p>
               <p>
-                Total: {cartData.price} x {cartData.quantity} ={" "}
+                Total: {cartData?.price} x {cartData?.quantity} ={" "}
                 {(
-                  parseFloat(cartData.price) * parseFloat(cartData.quantity)
+                  parseFloat(cartData?.price) * parseFloat(cartData?.quantity)
                 ).toFixed(2)}{" "}
                 Tk
               </p>

@@ -15,7 +15,7 @@ const Footer = () => {
     </>
   );
   return (
-    <div className="mt-10">
+    <div className="">
       <footer className={`bg-gray-100 text-gray-800`}>
         <div className="max-w-7xl flex gap-10  justify-between py-20 mx-auto space-y-8 lg:flex-row lg:space-y-0 px-5 lg:px-0">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 text-sm gap-x-3 gap-y-8  sm:grid-cols-4">

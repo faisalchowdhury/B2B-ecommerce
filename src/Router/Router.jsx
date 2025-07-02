@@ -17,6 +17,7 @@ import MyProducts from "../Pages/MyProducts";
 import Loading from "../Components/Loading";
 import Cart from "../Pages/Cart";
 import Payment from "../Pages/Payment";
+import Orders from "../Pages/Order";
 
 export const router = createBrowserRouter([
   {
@@ -100,8 +101,20 @@ export const router = createBrowserRouter([
       },
       {
         path: "payment/:cartId",
-        element: <PrivateRoute><Payment></Payment></PrivateRoute>
-      }
+        element: (
+          <PrivateRoute>
+            <Payment></Payment>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/my-orders",
+        element: (
+          <PrivateRoute>
+            <Orders></Orders>
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   {

@@ -1,6 +1,6 @@
 import { Rating, Star } from "@smastrom/react-rating";
 import React, { useEffect, useRef, useState } from "react";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import "@smastrom/react-rating/style.css";
 import axios from "axios";
 import useAuth from "../Hooks/useAuth";
@@ -11,6 +11,7 @@ const ProductDetails = () => {
   const { data } = useLoaderData();
   const modalBox = useRef("");
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const [quantityErr, setQuantityErr] = useState(null);
   const [productCategory, setProductCategory] = useState("");
@@ -90,22 +91,22 @@ const ProductDetails = () => {
     formFields.product_id = _id;
     formFields.email = user.email;
 
-    console.log(formFields)
+    console.log(formFields);
 
-    axios
-      .post("http://localhost:3000/add-to-cart", formFields)
-      .then((res) => {
-        if (res.data.insertedId) {
-          modalBox.current.close();
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Your order has been successfully placed",
-            showConfirmButton: false,
-            timer: 3000,
-          });
-        }
-      });
+    axios.post("http://localhost:3000/add-to-cart", formFields).then((res) => {
+      if (res.data.insertedId) {
+        modalBox.current.close();
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your product has been added to cart",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+
+        navigate("/cart");
+      }
+    });
   };
   return (
     <>
@@ -255,45 +256,41 @@ const ProductDetails = () => {
                   </div>
                 </div>
               </div>
-
-             
-              
             </div>
-          <form onSubmit={handleAddToCart}>
-                <div className="">
-
-                  {/* Total  */}
-                  <div className="mt-6 border-t border-b py-2">
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm font-medium text-gray-900">
-                        Product Price
-                      </p>
-                      <p className="font-semibold text-gray-900">
-                        {num_price} x {quantityValue}
-                      </p>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm font-medium text-gray-900">
-                        Subtotal
-                      </p>
-                      <p className="font-semibold text-gray-900">
-                        {(num_price * quantityValue).toFixed(2)}
-                      </p>
-                    </div>
+            <form onSubmit={handleAddToCart}>
+              <div className="">
+                {/* Total  */}
+                <div className="mt-6 border-t border-b py-2">
+                  <div className="flex items-center justify-between">
+                    <p className="text-sm font-medium text-gray-900">
+                      Product Price
+                    </p>
+                    <p className="font-semibold text-gray-900">
+                      {num_price} x {quantityValue}
+                    </p>
                   </div>
-                  <div className="mt-6 flex items-center justify-between">
-                    <p className="text-sm font-medium text-gray-900">Total</p>
-                    <p className="text-2xl font-semibold text-gray-900">
-                      {(num_price * quantityValue).toFixed(2)} BDT
+                  <div className="flex items-center justify-between">
+                    <p className="text-sm font-medium text-gray-900">
+                      Subtotal
+                    </p>
+                    <p className="font-semibold text-gray-900">
+                      {(num_price * quantityValue).toFixed(2)}
                     </p>
                   </div>
                 </div>
-                <button
-                  type="submit"
-                  className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white">
-                  Add to cart
-                </button>
-              </form>
+                <div className="mt-6 flex items-center justify-between">
+                  <p className="text-sm font-medium text-gray-900">Total</p>
+                  <p className="text-2xl font-semibold text-gray-900">
+                    {(num_price * quantityValue).toFixed(2)} BDT
+                  </p>
+                </div>
+              </div>
+              <button
+                type="submit"
+                className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white">
+                Add to cart
+              </button>
+            </form>
           </div>
 
           <button
