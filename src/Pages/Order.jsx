@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../Hooks/useAuth";
 import useAxios from "../Hooks/useAxios";
 import { Link } from "react-router";
+import Loading from "../Components/Loading";
 
 export default function Orders() {
   const axiosInstance = useAxios();
@@ -28,10 +29,13 @@ export default function Orders() {
     }
   }, [data]);
 
-  if (isLoading)
-    return <p className="text-center p-4">Loading your orders...</p>;
+  if (isLoading) return <Loading></Loading>;
   if (error)
-    return <p className="text-center p-4 text-red-500">Error loading orders</p>;
+    return (
+      <p className="text-center p-4 min-h-full text-red-500">
+        Error loading orders
+      </p>
+    );
 
   return (
     <div className="max-w-6xl mx-auto p-4">

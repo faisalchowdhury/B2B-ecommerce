@@ -95,7 +95,7 @@ const AllProducts = () => {
   const openModal = (id) => {
     modalBox.current.showModal();
     axios
-      .get(`http://localhost:3000/product/${id}`)
+      .get(`https://b2b-server-five.vercel.app/product/${id}`)
       .then((res) => setUpdateProductData(res.data));
   };
   const handleDeleteProduct = (id) => {
@@ -108,7 +108,7 @@ const AllProducts = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:3000/delete/${id}`)
+          .delete(`https://b2b-server-five.vercel.app/delete/${id}`)
           .then((res) => {
             if (res.data.deletedCount) {
               const newProducts = products.filter(

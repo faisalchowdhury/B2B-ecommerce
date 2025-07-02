@@ -7,7 +7,7 @@ const useAxios = () => {
   // https://b2b-server-five.vercel.app
   const { user } = useAuth();
   const axiosInstance = axios.create({
-    baseURL: "http://localhost:3000",
+    baseURL: "https://b2b-server-five.vercel.app",
     headers: { "user-email": user?.email },
     withCredentials: true,
   });

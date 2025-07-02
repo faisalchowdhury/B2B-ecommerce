@@ -21,7 +21,7 @@ const MyProducts = () => {
     setLoading(true);
     axiosInstance
       .get(
-        `http://localhost:3000/my-products?email=${user?.email}`
+        `https://b2b-server-five.vercel.app/my-products?email=${user?.email}`
       )
       .then((res) => {
         setProducts(res.data);
@@ -41,7 +41,7 @@ const MyProducts = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:3000/delete/${id}`)
+          .delete(`https://b2b-server-five.vercel.app/delete/${id}`)
           .then((res) => {
             if (res.data.deletedCount) {
               const newProducts = products.filter(
@@ -57,7 +57,7 @@ const MyProducts = () => {
   const openModal = (id) => {
     modalBox.current.showModal();
     axios
-      .get(`http://localhost:3000/product/${id}`)
+      .get(`https://b2b-server-five.vercel.app/product/${id}`)
       .then((res) => setUpdateProductData(res.data));
   };
   const handleUpdateProduct = (id) => {
@@ -72,7 +72,7 @@ const MyProducts = () => {
     };
 
     axios
-      .put(`http://localhost:3000/update-product/${id}`, data)
+      .put(`https://b2b-server-five.vercel.app/update-product/${id}`, data)
       .then((res) => {
         if (res.data.modifiedCount) {
           toast.success("Data Updated Successfully");
