@@ -3,15 +3,41 @@ import logo from "../assets/logo.png";
 import { Link, NavLink } from "react-router";
 import { FaFacebook, FaGithub, FaLinkedin } from "react-icons/fa";
 import paymentOption from "../assets/payment-option.png";
+import useAuth from "../Hooks/useAuth";
 const Footer = () => {
+  const { user } = useAuth();
   const menu = (
     <>
-      <NavLink to={"/"}>Home</NavLink>
-      <NavLink to={"/categories"}>Categories </NavLink>
-      <NavLink to={"/products"}>All Products</NavLink>
-      <NavLink to={"/add-product"}>Add Product</NavLink>
-      <NavLink to={"/my-products"}>My Products</NavLink>
-      <NavLink to={"/cart"}>Cart</NavLink>
+      <NavLink className={"hover:text-primary"} to={"/"}>
+        Home
+      </NavLink>
+      <NavLink className={"hover:text-primary"} to={"/categories"}>
+        Categories{" "}
+      </NavLink>
+      <NavLink className={"hover:text-primary"} to={"/products"}>
+        All Products
+      </NavLink>
+
+      {user && (
+        <>
+          <NavLink className={"hover:text-primary"} to={"/add-product"}>
+            Add Product
+          </NavLink>
+          <NavLink className={"hover:text-primary"} to={"/my-products"}>
+            My Products
+          </NavLink>
+          <NavLink className={"hover:text-primary"} to={"/cart"}>
+            Cart
+          </NavLink>
+          <NavLink className={"hover:text-primary"} to={"/my-orders"}>
+            Orders
+          </NavLink>
+        </>
+      )}
+
+      <NavLink className={"hover:text-primary"} to={"/about"}>
+        Who we are ?
+      </NavLink>
     </>
   );
   return (
