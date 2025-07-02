@@ -18,6 +18,7 @@ import Loading from "../Components/Loading";
 import Cart from "../Pages/Cart";
 import Payment from "../Pages/Payment";
 import Orders from "../Pages/Order";
+import About from "../Pages/About";
 
 export const router = createBrowserRouter([
   {
@@ -77,11 +78,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/products",
-        element: (
-          <PrivateRoute>
-            <AllProducts></AllProducts>
-          </PrivateRoute>
-        ),
+        element: <AllProducts></AllProducts>,
       },
       {
         path: "my-products",
@@ -114,6 +111,10 @@ export const router = createBrowserRouter([
             <Orders></Orders>
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/about",
+        Component: About,
       },
     ],
   },

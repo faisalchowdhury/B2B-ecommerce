@@ -27,14 +27,26 @@ const Header = () => {
       <NavLink className={"hover:text-primary"} to={"/products"}>
         All Products
       </NavLink>
-      <NavLink className={"hover:text-primary"} to={"/add-product"}>
-        Add Product
-      </NavLink>
-      <NavLink className={"hover:text-primary"} to={"/my-products"}>
-        My Products
-      </NavLink>
-      <NavLink className={"hover:text-primary"} to={"/cart"}>
-        Cart
+
+      {user && (
+        <>
+          <NavLink className={"hover:text-primary"} to={"/add-product"}>
+            Add Product
+          </NavLink>
+          <NavLink className={"hover:text-primary"} to={"/my-products"}>
+            My Products
+          </NavLink>
+          <NavLink className={"hover:text-primary"} to={"/cart"}>
+            Cart
+          </NavLink>
+          <NavLink className={"hover:text-primary"} to={"/my-orders"}>
+            Orders
+          </NavLink>
+        </>
+      )}
+
+      <NavLink className={"hover:text-primary"} to={"/about"}>
+        Who we are ?
       </NavLink>
     </>
   );
