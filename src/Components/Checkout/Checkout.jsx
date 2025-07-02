@@ -1,55 +1,168 @@
-import React from 'react';
-import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import useAxios from '../../Hooks/useAxios';
+// Checkout.jsx
 
+import React, { useState } from "react";
+import { FaUser, FaEnvelope, FaHome, FaPhone } from "react-icons/fa";
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import useAxios from "../../Hooks/useAxios";
 
-const Checkout = () => {
+export default function Checkout({ cartData }) {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    address: "",
+    phone: "",
+  });
   const stripe = useStripe();
-  console.log(stripe)
   const elements = useElements();
-  console.log(elements)
-  const axiosIns = useAxios();
+  const axiosInstance = useAxios();
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!stripe || !elements) {
+      alert("Stripe not loaded yet. Please try again.");
+      return;
+    }
 
-    if (!stripe || !elements) return;
+    try {
+      setLoading(true);
 
-    // Create PaymentIntent on your backend and get clientSecret
-    const { data } = await axiosIns.post("/create-payment-intent", {
-      amount: 2000, // in cents ($20.00)
-    });
+      const { data } = await axiosInstance.post("/create-payment-intent", {
+        amount: parseFloat(cartData.price) * parseInt(cartData.quantity) * 100, // cents
+      });
 
-    const clientSecret = data.clientSecret;
+      const clientSecret = data.clientSecret;
 
-    const result = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: elements.getElement(CardElement),
-      },
-    });
+      const result = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: elements.getElement(CardElement),
+          billing_details: {
+            name: formData.name,
+            email: formData.email,
+            address: { line1: formData.address },
+            phone: formData.phone,
+          },
+        },
+      });
 
-    if (result.error) {
-      console.error(result.error.message);
-      alert(result.error.message);
-    } else {
-      if (result.paymentIntent.status === 'succeeded') {
-        console.log("Payment Successful!", result.paymentIntent);
-        alert("Payment Successful!");
+      if (result.error) {
+        console.error(result.error.message);
+        alert(result.error.message);
+      } else {
+        if (result.paymentIntent.status === "succeeded") {
+          console.log("Payment Successful!", result.paymentIntent);
+          alert("Payment Successful!");
+        }
       }
+    } catch (error) {
+      console.error(error);
+      alert("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-10 p-4 shadow rounded bg-white">
-      <CardElement />
-      <button
-        type="submit"
-        disabled={!stripe}
-        className="mt-4 w-full bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition"
-      >
-        Pay
-      </button>
-    </form>
-  );
-};
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+      <div className="bg-white rounded-2xl shadow-lg grid grid-cols-1 md:grid-cols-3 w-full max-w-6xl overflow-hidden">
+        {/* Left: Product Card */}
+        <div className="md:col-span-1 flex items-center justify-center p-4">
+          <div className="flex bg-white rounded-xl shadow p-4 w-full">
+            <img
+              src={cartData.image_url}
+              alt="Product"
+              className="rounded-lg object-cover w-28 h-28 mr-4"
+            />
+            <div className="flex flex-col justify-between">
+              <h2 className="text-lg font-semibold">{cartData.product_name}</h2>
+              <p className="text-gray-500 text-sm">
+                Quantity: {cartData.quantity}
+              </p>
+              <p className="text-indigo-600">Price: {cartData.price} Tk</p>
+              <p>
+                Total: {cartData.price} x {cartData.quantity} ={" "}
+                {(
+                  parseFloat(cartData.price) * parseFloat(cartData.quantity)
+                ).toFixed(2)}{" "}
+                Tk
+              </p>
+            </div>
+          </div>
+        </div>
 
-export default Checkout;
+        {/* Right: Checkout Form */}
+        <form
+          onSubmit={handleSubmit}
+          className="md:col-span-2 p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <h2 className="text-2xl font-bold md:col-span-2 mb-2">Checkout</h2>
+
+          <div className="flex items-center border rounded-lg overflow-hidden shadow-sm">
+            <FaUser className="mx-3 text-gray-500" />
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full p-3 outline-none"
+              required
+            />
+          </div>
+
+          <div className="flex items-center border rounded-lg overflow-hidden shadow-sm">
+            <FaEnvelope className="mx-3 text-gray-500" />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full p-3 outline-none"
+              required
+            />
+          </div>
+
+          <div className="flex items-center border rounded-lg overflow-hidden shadow-sm">
+            <FaHome className="mx-3 text-gray-500" />
+            <input
+              type="text"
+              name="address"
+              placeholder="Address"
+              value={formData.address}
+              onChange={handleChange}
+              className="w-full p-3 outline-none"
+              required
+            />
+          </div>
+
+          <div className="flex items-center border rounded-lg overflow-hidden shadow-sm">
+            <FaPhone className="mx-3 text-gray-500" />
+            <input
+              type="text"
+              name="phone"
+              placeholder="Phone Number"
+              value={formData.phone}
+              onChange={handleChange}
+              className="w-full p-3 outline-none"
+              required
+            />
+          </div>
+
+          <div className="md:col-span-2">
+            <CardElement className="border rounded p-3" />
+            <button
+              type="submit"
+              disabled={!stripe || loading}
+              className="mt-4 w-full bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">
+              {loading ? "Processing..." : "Pay"}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
