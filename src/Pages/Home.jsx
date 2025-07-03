@@ -60,10 +60,10 @@ const Home = () => {
   return (
     <>
       <title>Home</title>
-      <div className="max-w-[1400px] mx-auto py-10">
+      <div className="max-w-[1400px] mx-auto py-10 px-5 2xl:px-0 ">
         <Slider></Slider>
 
-        <div className="px-5 lg:px-0">
+        <div className="">
           {/* Category Section */}
 
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 py-20 gap-5 ">
