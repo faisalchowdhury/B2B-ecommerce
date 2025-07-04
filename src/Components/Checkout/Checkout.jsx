@@ -1,6 +1,6 @@
 // Checkout.jsx
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaUser, FaEnvelope, FaHome, FaPhone } from "react-icons/fa";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import useAxios from "../../Hooks/useAxios";
@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import useAuth from "../../Hooks/useAuth";
 import Swal from "sweetalert2";
+import { ThemeContext } from "../../Context/ThemeContext";
 
 export default function Checkout({ cartData }) {
   const { user } = useAuth();
@@ -22,6 +23,7 @@ export default function Checkout({ cartData }) {
   const axiosInstance = useAxios();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { darkMode } = useContext(ThemeContext);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -99,11 +101,17 @@ export default function Checkout({ cartData }) {
   };
 
   return (
-    <div className="flex items-center justify-center bg-gray-100  py-10">
-      <div className="bg-white rounded-2xl shadow-lg grid grid-cols-1 md:grid-cols-3 w-full max-w-6xl overflow-hidden">
+    <div
+      className={`flex items-center justify-center   py-10 ${
+        darkMode === true ? "bg-gray-900 text-white" : "bg-slate-100"
+      }`}>
+      <div
+        className={`${
+          darkMode === true ? "bg-gray-800 text-white" : "bg-slate-100"
+        } rounded-2xl shadow-lg grid grid-cols-1 md:grid-cols-3 w-full max-w-6xl overflow-hidden`}>
         {/* Left: Product Card */}
         <div className="md:col-span-1 flex items-center justify-center p-4">
-          <div className="flex bg-white rounded-xl shadow p-4 w-full">
+          <div className="flex  rounded-xl shadow p-4 w-full">
             <img
               src={cartData?.image_url}
               alt="Product"

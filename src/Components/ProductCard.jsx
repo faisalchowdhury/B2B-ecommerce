@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Rating, Star } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import { Link } from "react-router";
 import axios from "axios";
+import { ThemeContext } from "../Context/ThemeContext";
 const ProductCard = ({ product }) => {
   const [productCategory, setProductCategory] = useState("");
+  const { darkMode } = useContext(ThemeContext);
   const myStyles = {
     itemShapes: Star,
     activeFillColor: "#ffb700",
@@ -23,7 +25,12 @@ const ProductCard = ({ product }) => {
   return (
     <div>
       <div>
-        <div className="relative flex w-full h-[400px]  flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md ">
+        <div
+          className={`relative flex w-full h-[400px]  flex-col overflow-hidden rounded-lg border shadow-md ${
+            darkMode === true
+              ? "bg-slate-950 text-white"
+              : "border-gray-100 bg-white "
+          } `}>
           <div
             className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl"
             href="#">
@@ -37,17 +44,13 @@ const ProductCard = ({ product }) => {
             </span>
           </div>
           <div className="mt-4 px-5 pb-5">
-            <h5 className="text-xl tracking-tight text-slate-900">
-              {product.product_name}
-            </h5>
+            <h5 className="text-xl tracking-tight ">{product.product_name}</h5>
             <p>
               Category - {productCategory?.name} | Brand - {product.brand}
             </p>
             <div className="mt-2 mb-5 flex items-center justify-between">
               <p>
-                <span className="text-xl font-bold text-slate-900">
-                  BDT {product.price}
-                </span>
+                <span className="text-xl font-bold ">BDT {product.price}</span>
               </p>
               <div className="flex items-center">
                 <Rating

@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router";
 import useAuth from "../Hooks/useAuth";
 import { FaEdit, FaEye } from "react-icons/fa";
@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import toast, { Toaster } from "react-hot-toast";
 import useAxios from "../Hooks/useAxios";
 import Loading from "../Components/Loading";
+import { ThemeContext } from "../Context/ThemeContext";
 
 const MyProducts = () => {
   const { user } = useAuth();
@@ -16,6 +17,7 @@ const MyProducts = () => {
   const axiosInstance = useAxios();
   const modalBox = useRef("");
   const textArea = useRef("");
+  const { darkMode } = useContext(ThemeContext);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
@@ -181,7 +183,9 @@ const MyProducts = () => {
           className="modal overflow-scroll">
           <Toaster></Toaster>
           <div
-            className={`bg-slate-100
+            className={`${
+              darkMode === true ? "bg-gray-700 text-white" : "bg-slate-100"
+            }
                             p-5 rounded-sm space-y-5 my-10 max-w-5xl  relative`}>
             <button
               type="button"
@@ -190,7 +194,7 @@ const MyProducts = () => {
               ✕
             </button>
             <div
-              className={`max-w-7xl mx-auto bg-slate-100 p-5 rounded-sm space-y-5 my-10`}>
+              className={`max-w-7xl mx-auto  p-5 rounded-sm space-y-5 my-10`}>
               <title>Add a Product</title>
               <h2 className="text-2xl">Update Product</h2>
               <form onSubmit={() => handleUpdateProduct(updateProductData._id)}>

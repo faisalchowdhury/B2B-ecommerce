@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
-import logo from "../assets/logo.png";
+
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "../Context/AuthContext";
 import { Tooltip } from "react-tooltip";
 import { Toaster } from "react-hot-toast";
-import { MdOutlineShoppingBag } from "react-icons/md";
+import { MdDarkMode, MdOutlineShoppingBag } from "react-icons/md";
+import { CiLight } from "react-icons/ci";
 import {
   FaEnvelope,
   FaFacebook,
@@ -12,10 +13,12 @@ import {
   FaPhone,
   FaYoutube,
 } from "react-icons/fa";
+import { ThemeContext } from "../Context/ThemeContext";
+import Logo from "../Components/Logo";
 
 const Header = () => {
   const { user, logoutUser } = useContext(AuthContext);
-
+  const { darkMode, setDarkMode } = useContext(ThemeContext);
   const menu = (
     <>
       <NavLink className={"hover:text-primary"} to={"/"}>
@@ -53,7 +56,10 @@ const Header = () => {
   return (
     <>
       <Toaster />
-      <div className="bg-black text-white px-5 ">
+      <div
+        className={` px-5 ${
+          darkMode === true ? "bg-gray-900 text-white" : "bg-black text-white "
+        } `}>
         <div className="flex justify-between max-w-7xl mx-auto py-3 ">
           <div className="flex gap-3">
             <span className="flex items-center gap-2  text-sm">
@@ -78,7 +84,10 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <div className="bg-slate-100 py-3 sticky top-0 z-10">
+      <div
+        className={`${
+          darkMode === true ? "bg-slate-700" : "bg-slate-100"
+        }  py-3 sticky top-0 z-10`}>
         <div className=" flex flex-col sm:flex-row justify-between gap-5 bg-base-100 max-w-7xl mx-auto px-5 lg:px-0">
           <div className="flex justify-between sm:justify-start  items-center">
             <div className="dropdown">
@@ -103,12 +112,12 @@ const Header = () => {
               </div>
               <ul
                 tabIndex={0}
-                className=" menu menu-sm dropdown-content rounded-box z-10 bg-white mt-3 w-52 p-2 shadow">
+                className=" menu menu-sm dropdown-content rounded-box z-10 bg-gray-200 text-black mt-3 w-52 p-2 shadow ">
                 {menu}
               </ul>
             </div>
             <Link to={"/"}>
-              <img className="w-[150px]" src={logo} alt="" />
+              <Logo></Logo>
             </Link>
           </div>
 
@@ -153,6 +162,9 @@ const Header = () => {
                 </div>
               </>
             )}
+            <button onClick={() => setDarkMode(!darkMode)}>
+              {darkMode ? <CiLight size={26} /> : <MdDarkMode size={26} />}
+            </button>
           </div>
         </div>
       </div>

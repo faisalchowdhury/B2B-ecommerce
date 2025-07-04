@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import logo from "../assets/logo.png";
+
 import { Link, NavLink } from "react-router";
 import { FaFacebook, FaGithub, FaLinkedin } from "react-icons/fa";
 import paymentOption from "../assets/payment-option.png";
 import useAuth from "../Hooks/useAuth";
+import { ThemeContext } from "../Context/ThemeContext";
+import Logo from "../Components/Logo";
+
 const Footer = () => {
   const { user } = useAuth();
+  const { darkMode } = useContext(ThemeContext);
   const menu = (
     <>
       <NavLink className={"hover:text-primary"} to={"/"}>
@@ -42,13 +47,19 @@ const Footer = () => {
   );
   return (
     <div className="">
-      <footer className={`bg-gray-100 text-gray-800`}>
+      <footer
+        className={` ${
+          darkMode === true
+            ? "bg-gray-950 text-white"
+            : "bg-gray-100 text-gray-800 "
+        } `}>
         <div className="max-w-7xl flex gap-10  justify-between py-20 mx-auto space-y-8 lg:flex-row lg:space-y-0 px-5 lg:px-0">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 text-sm gap-x-3 gap-y-8  sm:grid-cols-4">
-            <div className="">
-              <Link className="">
-                <img className="w-[200px]" src={logo} alt="" />
+            <div>
+              <Link to="/" className="">
+                <Logo></Logo>
               </Link>
+              <br></br>
               <p className="w-3/4">
                 Deal Craft is your trusted multivendor marketplace, connecting
                 buyers with reliable sellers across a wide range of categories.

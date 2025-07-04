@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useLoaderData } from "react-router";
+import { ThemeContext } from "../Context/ThemeContext";
 
 const Categories = () => {
   const { data } = useLoaderData();
+  const { darkMode } = useContext(ThemeContext);
   return (
     <>
       <title>Categories</title>
@@ -10,7 +12,10 @@ const Categories = () => {
         <div className="grid sm:grid-cols-3 lg:grid-cols-5 py-20 gap-5">
           {data.map((category) => (
             <Link key={category._id} to={`/category/${category.slug}`}>
-              <div className="p-10 shadow rounded-xl hover:shadow-xl bg-slate-50 h-[200px] flex items-center">
+              <div
+                className={`p-10 shadow rounded-xl hover:shadow-xl  h-[200px] flex items-center ${
+                  darkMode === true ? "bg-gray-700 text-white" : "bg-slate-50 "
+                } `}>
                 <div>
                   <img src={category.image_path} alt="" />
                   <h2 className="text-xl font-semibold space-y-3 ">

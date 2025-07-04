@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router";
 import about from "../assets/about.jpg";
+import { ThemeContext } from "../Context/ThemeContext";
 
 const About = () => {
+  const { darkMode } = useContext(ThemeContext);
   return (
     <div>
-      <div className=" min-h-screen max-w-5xl mx-auto my-10 p-5 bg-slate-50 shadow rounded-xl ">
+      <div
+        className={` min-h-screen max-w-5xl mx-auto my-10 p-5 shadow rounded-xl ${
+          darkMode === true ? "bg-gray-700 text-white" : "bg-slate-50"
+        }`}>
         <div className=" space-y-5">
           <img
             className="rounded-xl h-[300px] w-full object-cover"

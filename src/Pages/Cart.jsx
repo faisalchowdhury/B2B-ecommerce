@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useAuth from "../Hooks/useAuth";
 import axios from "axios";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 import useAxios from "../Hooks/useAxios";
 import Loading from "../Components/Loading";
+import { ThemeContext } from "../Context/ThemeContext";
 const Cart = () => {
   const { user } = useAuth();
   const [cart, setCart] = useState([]);
   const axiosInstance = useAxios();
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { darkMode } = useContext(ThemeContext);
   useEffect(() => {
     setLoading(true);
     axiosInstance
@@ -59,7 +61,9 @@ const Cart = () => {
           cart.map((cartInfo) => (
             <div
               key={cartInfo._id}
-              className="sm:flex gap-5 items-center shadow p-5 border-3 border-primary border-dashed rounded bg-slate-100 ">
+              className={`sm:flex gap-5 items-center shadow p-5 border-3 border-primary border-dashed rounded   ${
+                darkMode === true ? "bg-gray-800 text-white" : "bg-slate-100"
+              }`}>
               <img
                 className="w-[250px] h-[250px] rounded shadow"
                 src={cartInfo.image_url}
@@ -74,7 +78,10 @@ const Cart = () => {
                       ?.name
                   }
                 </p>
-                <p className="text-gray-600">
+                <p
+                  className={`${
+                    darkMode === true ? "text-slate-300" : "text-slate-600"
+                  }`}>
                   Date :{" "}
                   {cartInfo.date &&
                     new Date(cartInfo?.date).toISOString().slice(0, 10)}

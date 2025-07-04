@@ -20,7 +20,7 @@ import {
 } from "swiper/modules";
 const Slider = () => {
   return (
-    <div className="">
+    <div className="text-black">
       <div className="col-span-4">
         <Swiper
           loop={true}

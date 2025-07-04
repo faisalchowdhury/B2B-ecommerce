@@ -1,18 +1,19 @@
 // Orders.jsx
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../Hooks/useAuth";
 import useAxios from "../Hooks/useAxios";
 import { Link } from "react-router";
 import Loading from "../Components/Loading";
+import { ThemeContext } from "../Context/ThemeContext";
 
 export default function Orders() {
   const axiosInstance = useAxios();
   const [orders, setOrders] = useState([]);
   const { user } = useAuth();
-
+  const { darkMode } = useContext(ThemeContext);
   const { data, isLoading, error } = useQuery({
     queryKey: ["user-orders"],
     queryFn: async () => {
@@ -54,8 +55,14 @@ export default function Orders() {
         </div>
       ) : (
         <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden">
-            <thead className="bg-gray-100">
+          <table
+            className={`min-w-full  border-gray-200 rounded-lg overflow-hidden ${
+              darkMode === true ? "bg-gray-700 text-white" : "bg-slate-100"
+            }`}>
+            <thead
+              className={`${
+                darkMode === true ? "bg-gray-700 text-white" : "bg-slate-100"
+              }`}>
               <tr>
                 <th className="text-left p-3 border-b">#</th>
                 <th className="text-left p-3 border-b">Product</th>
@@ -67,9 +74,9 @@ export default function Orders() {
             </thead>
             <tbody>
               {orders.map((order, index) => (
-                <tr key={order._id} className="hover:bg-gray-50">
-                  <td className="p-3 border-b">{index + 1}</td>
-                  <td className="p-3 border-b flex items-center gap-2">
+                <tr key={order._id} className="hover:bg-gray-400">
+                  <td className="p-3">{index + 1}</td>
+                  <td className="p-3 flex items-center gap-2">
                     <img
                       src={order?.image_url}
                       alt={order?.product_name}
@@ -77,14 +84,14 @@ export default function Orders() {
                     />
                     <span>{order?.product_name}</span>
                   </td>
-                  <td className="p-3 border-b">{order?.quantity}</td>
-                  <td className="p-3 border-b">Tk{order?.price?.toFixed(2)}</td>
+                  <td className="p-3">{order?.quantity}</td>
+                  <td className="p-3">Tk{order?.price?.toFixed(2)}</td>
 
-                  <td className="p-3 border-b">
+                  <td className="p-3">
                     {new Date(order.order_date).toLocaleDateString()}
                   </td>
 
-                  <td className="p-3 border-b">
+                  <td className="p-3">
                     Tk
                     {(
                       parseFloat(order?.price) * parseInt(order?.quantity)

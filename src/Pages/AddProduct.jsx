@@ -4,13 +4,14 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import useAxios from "../Hooks/useAxios";
+import { ThemeContext } from "../Context/ThemeContext";
 
 const AddProduct = () => {
   const { user } = useContext(AuthContext);
   const textArea = useRef("");
   const axiosInstance = useAxios();
   const ratingControl = useRef(null);
-
+  const { darkMode } = useContext(ThemeContext);
   const handleCreateProduct = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -47,7 +48,10 @@ const AddProduct = () => {
     <>
       <title>Add Product</title>
       <div className="p-5 lg:p-0">
-        <div className="max-w-7xl mx-auto bg-slate-100 p-5 rounded-sm space-y-5 my-10  ">
+        <div
+          className={`max-w-7xl mx-auto  p-5 rounded-sm space-y-5 my-10    ${
+            darkMode === true ? "bg-gray-700 text-white" : "bg-slate-100"
+          }`}>
           <title>Add a Product</title>
           <h2 className="text-2xl">Add a Product</h2>
           <form onSubmit={handleCreateProduct}>

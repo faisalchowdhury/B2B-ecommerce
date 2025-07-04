@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Rating, Star } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import { Link } from "react-router";
@@ -16,11 +16,12 @@ import {
 import Swal from "sweetalert2";
 import useAxios from "../Hooks/useAxios";
 import Loading from "../Components/Loading";
+import { ThemeContext } from "../Context/ThemeContext";
 
 const AllProducts = () => {
   const { user } = useAuth();
   const [allProducts, setAllProducts] = useState([]);
-
+  const { darkMode } = useContext(ThemeContext);
   const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState(false);
   const axiosInstance = useAxios();
@@ -173,7 +174,12 @@ const AllProducts = () => {
             {products.map((product) => (
               <div key={product._id}>
                 <div>
-                  <div className="relative flex w-full h-[450px]  flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md ">
+                  <div
+                    className={`relative flex w-full h-[450px]  flex-col overflow-hidden rounded-lg border  shadow-md ${
+                      darkMode === true
+                        ? "bg-gray-950 text-white"
+                        : "border-gray-100 bg-white"
+                    } `}>
                     <div
                       className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl"
                       href="#">
@@ -187,13 +193,13 @@ const AllProducts = () => {
                       </span>
                     </div>
                     <div className="mt-4 px-5 pb-5">
-                      <h5 className="text-xl tracking-tight text-slate-900">
+                      <h5 className="text-xl tracking-tight ">
                         {product.product_name}
                       </h5>
 
                       <div className="mt-2 mb-5 flex items-center justify-between">
                         <p>
-                          <span className="text-xl font-bold text-slate-900">
+                          <span className="text-xl font-bold ">
                             BDT {product.price}
                           </span>
                         </p>
@@ -242,7 +248,12 @@ const AllProducts = () => {
             {products.map((product) => (
               <div key={product._id}>
                 <div>
-                  <div className=" sm:flex max-w-7xl mx-auto overflow-hidden rounded-lg border-3 border-gray-200 bg-white shadow-md p-5  border-dashed items-center gap-5">
+                  <div
+                    className={`sm:flex max-w-7xl mx-auto overflow-hidden rounded-lg border-3  shadow-md p-5  border-dashed items-center gap-5  ${
+                      darkMode === true
+                        ? "bg-gray-950 text-white"
+                        : "border-gray-200 bg-white"
+                    }`}>
                     <div
                       className="flex  h-60 sm:w-80 overflow-hidden rounded-xl"
                       href="#">
@@ -253,15 +264,13 @@ const AllProducts = () => {
                       />
                     </div>
                     <div className="mt-4 px-5 pb-5">
-                      <h5 className="text-xl text-slate-900">
-                        {product.product_name}
-                      </h5>
+                      <h5 className="text-xl ">{product.product_name}</h5>
                       <span className=" top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
                         Min Quantity {product.minimum_selling_quantity}
                       </span>
                       <div className="mt-2 mb-5 flex items-center justify-between">
                         <p>
-                          <span className="text-xl font-bold text-slate-900">
+                          <span className="text-xl font-bold ">
                             BDT {product.price}
                           </span>
                         </p>
@@ -312,7 +321,9 @@ const AllProducts = () => {
       <dialog ref={modalBox} id="my_modal_7" className="modal overflow-scroll">
         <Toaster></Toaster>
         <div
-          className={`bg-slate-100
+          className={`${
+            darkMode === true ? "bg-gray-700 text-white" : "bg-slate-100"
+          }
                             p-5 rounded-sm space-y-5 my-10 max-w-5xl  relative`}>
           <button
             type="button"
@@ -320,8 +331,7 @@ const AllProducts = () => {
             className="modal-action btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
             ✕
           </button>
-          <div
-            className={`max-w-7xl mx-auto bg-slate-100 p-5 rounded-sm space-y-5 my-10`}>
+          <div className={`max-w-7xl mx-auto  p-5 rounded-sm space-y-5 my-10`}>
             <title>Add a Product</title>
             <h2 className="text-2xl">Update Product</h2>
             <form onSubmit={() => handleUpdateProduct(updateProductData._id)}>

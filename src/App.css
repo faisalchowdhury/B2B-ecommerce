@@ -53,3 +53,8 @@
 a.active {
   color: orange;
 }
+
+.dark {
+  background: #101828;
+  color: #fff;
+}

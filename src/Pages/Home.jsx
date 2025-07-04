@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Slider from "../Components/Slider";
 import newsLetterAnimation from "../assets/Lottie-animation/newsletter.json";
@@ -10,9 +10,11 @@ import like from "../assets/like.png";
 import { Link, useLoaderData } from "react-router";
 import axios from "axios";
 import ProductCard from "../Components/ProductCard";
+import { ThemeContext } from "../Context/ThemeContext";
 const Home = () => {
   const { data } = useLoaderData();
   const [arrival, setArrival] = useState([]);
+  const { darkMode } = useContext(ThemeContext);
   useEffect(() => {
     axios
       .get("https://b2b-server-five.vercel.app/new-arrival-products")
@@ -69,7 +71,10 @@ const Home = () => {
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 py-20 gap-5 ">
             {data.map((category) => (
               <Link key={category._id} to={`/category/${category.slug}`}>
-                <div className="p-10 shadow rounded-xl hover:shadow-xl bg-slate-50 h-[200px] flex items-center">
+                <div
+                  className={`p-10 shadow rounded-xl hover:shadow-xl ${
+                    darkMode === true ? "bg-slate-700" : "bg-slate-50"
+                  } h-[200px] flex items-center`}>
                   <div>
                     <img src={category.image_path} alt="" />
                     <h2 className="text-xl font-semibold space-y-3 ">
@@ -83,8 +88,13 @@ const Home = () => {
           {/* Category Section */}
 
           {/* Newsletter */}
-          <div className="bg-linear-to-r from-[#fafafa] to-[#e3ebff] py-10 px-20 shadow sm:flex flex-wrap items-center rounded-lg">
-            <div className="flex-1 space-y-5 ">
+          <div
+            className={`${
+              darkMode === true
+                ? "bg-linear-to-r from-slate-950 to-slate-800"
+                : "bg-linear-to-r from-[#fafafa] to-[#e3ebff]"
+            }  py-10 px-20 shadow sm:flex flex-wrap items-center rounded-lg`}>
+            <div className="flex-1 space-y-5">
               <h1 className="text-5xl">SignUp For Newsletter</h1>
               <p className="text-xl">
                 Follow when an unknown printer took a galley of type.
@@ -92,10 +102,13 @@ const Home = () => {
 
               <div className="join">
                 <input
-                  className="input join-item border-l border-t border-b sm:w-[300px]"
+                  className="input join-item  border-l border-t border-b sm:w-[300px]"
                   placeholder="Email"
                 />
-                <button className="btn join-item  bg-black text-white border-black  hover:bg-gray-800">
+                <button
+                  className={`btn join-item  bg-black text-white border-2  hover:bg-gray-800 ${
+                    darkMode === true ? "border-white" : "border-black"
+                  } `}>
                   Subscribe
                 </button>
               </div>
@@ -125,7 +138,9 @@ const Home = () => {
             {serviceData.map((feature, index) => (
               <motion.div
                 key={index}
-                className="flex gap-5 p-5 items-center shadow bg-slate-50 rounded hover:shadow-xl border-2 border-dashed"
+                className={`flex gap-5 p-5 items-center shadow  rounded hover:shadow-xl border-2 border-dashed ${
+                  darkMode === true ? "bg-slate-800 text-white" : "bg-slate-50 "
+                } `}
                 variants={cardVariants}
                 initial="hidden"
                 animate="visible"
@@ -146,7 +161,12 @@ const Home = () => {
                 </div>
                 <div>
                   <h2 className="text-lg font-semibold">{feature.title}</h2>
-                  <p className="text-slate-700">{feature.description}</p>
+                  <p
+                    className={`${
+                      darkMode === true ? " text-white" : "text-slate-700 "
+                    } `}>
+                    {feature.description}
+                  </p>
                 </div>
               </motion.div>
             ))}

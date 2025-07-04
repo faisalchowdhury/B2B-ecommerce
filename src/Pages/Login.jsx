@@ -5,13 +5,14 @@ import toast from "react-hot-toast";
 import { AuthContext } from "../Context/AuthContext";
 import Lottie from "lottie-react";
 import useAxiosBase from "../Hooks/useAxiosBase";
+import { ThemeContext } from "../Context/ThemeContext";
 
 const Login = () => {
   const { loginUser, user, loginWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const axiosBase = useAxiosBase();
-
+  const { darkMode } = useContext(ThemeContext);
   const handleLoginUser = (e) => {
     e.preventDefault();
 
@@ -55,13 +56,16 @@ const Login = () => {
     <>
       <title>Login</title>
       <div className="md:flex justify-evenly">
-        <div className="">
+        <div>
           <title>Login</title>
-          <div className="w-full max-w-md p-8 space-y-3 rounded-xl dark:bg-gray-50 dark:text-gray-800 mx-auto my-10">
+          <div
+            className={`w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-50 text-gray-800 mx-auto my-10 ${
+              darkMode === true ? "bg-gray-700 text-white" : "bg-slate-100"
+            }`}>
             <h1 className="text-2xl font-bold text-center">Login</h1>
             <form onSubmit={handleLoginUser} className="space-y-6">
               <div className="space-y-1 text-sm">
-                <label className="block dark:text-gray-600">Email</label>
+                <label className="block ">Email</label>
                 <input
                   type="text"
                   name="email"
@@ -70,7 +74,7 @@ const Login = () => {
                 />
               </div>
               <div className="space-y-1 text-sm">
-                <label className="block dark:text-gray-600">Password</label>
+                <label className="block ">Password</label>
                 <input
                   type="password"
                   name="password"
@@ -86,9 +90,7 @@ const Login = () => {
             </form>
             <div className="flex items-center pt-4 space-x-1">
               <div className="flex-1 h-px sm:w-16 dark:bg-gray-300"></div>
-              <p className="px-3 text-sm dark:text-gray-600">
-                Login with social accounts
-              </p>
+              <p className="px-3 text-sm ">Login with social accounts</p>
               <div className="flex-1 h-px sm:w-16 dark:bg-gray-300"></div>
             </div>
             <div className="flex justify-center space-x-4">
@@ -120,9 +122,9 @@ const Login = () => {
                 Login with Google
               </button>
             </div>
-            <p className="text-lg text-center sm:px-6 dark:text-gray-600">
+            <p className="text-lg text-center sm:px-6 ">
               Don't have an account?
-              <Link to={"/register"} className="underline dark:text-gray-800">
+              <Link to={"/register"} className="underline ">
                 Create an account
               </Link>
             </p>

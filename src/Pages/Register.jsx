@@ -6,11 +6,13 @@ import Lottie from "lottie-react";
 import registerAnimation from "../assets/Lottie-animation/register.json";
 import axios from "axios";
 import useAxiosBase from "../Hooks/useAxiosBase";
+import { ThemeContext } from "../Context/ThemeContext";
 
 const Register = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const { registerUser, updateUserProfile, loginWithGoogle } =
     useContext(AuthContext);
+  const { darkMode } = useContext(ThemeContext);
   const axiosBase = useAxiosBase();
   const navigate = useNavigate();
 
@@ -109,12 +111,15 @@ const Register = () => {
             }}></Lottie>
         </div>
         <div className="">
-          <div className="lg:w-xl   p-8 space-y-3 rounded-xl dark:bg-gray-50 dark:text-gray-800 my-10 mx-auto">
-            <h1 className="text-2xl font-bold text-center">Register Here</h1>
+          <div
+            className={`lg:w-xl   p-8 space-y-3 rounded-xl  my-10 mx-auto ${
+              darkMode === true ? "bg-gray-700 text-white" : "bg-slate-100"
+            }`}>
+            <h1 className="text-2xl font-bold text-center ">Register Here</h1>
             <form onSubmit={handleRegisterUser} className="space-y-6">
               <div className="grid grid-cols-2 gap-5">
                 <div className="space-y-1 text-sm">
-                  <label className="block dark:text-gray-600">Full Name</label>
+                  <label className="block ">Full Name</label>
                   <input
                     type="text"
                     name="name"
@@ -124,7 +129,7 @@ const Register = () => {
                 </div>
 
                 <div className="space-y-1 text-sm">
-                  <label className="block dark:text-gray-600">Email</label>
+                  <label className="block ">Email</label>
                   <input
                     type="text"
                     name="email"
@@ -135,7 +140,7 @@ const Register = () => {
               </div>
               <div className="grid grid-cols-2 gap-5">
                 <div className="space-y-1 text-sm">
-                  <label className="block dark:text-gray-600">Photo Url</label>
+                  <label className="block ">Photo Url</label>
                   <input
                     onChange={handleFileUpload}
                     type="file"
@@ -145,9 +150,7 @@ const Register = () => {
                   />
                 </div>
                 <div className="space-y-1 text-sm">
-                  <label
-                    htmlFor="password"
-                    className="block dark:text-gray-600">
+                  <label htmlFor="password" className="block ">
                     Password
                   </label>
                   <input
@@ -166,9 +169,7 @@ const Register = () => {
             </form>
             <div className="flex items-center pt-4 space-x-1">
               <div className="flex-1 h-px sm:w-16 dark:bg-gray-300"></div>
-              <p className="px-3 text-sm dark:text-gray-600">
-                Login with social accounts
-              </p>
+              <p className="px-3 text-sm ">Login with social accounts</p>
               <div className="flex-1 h-px sm:w-16 dark:bg-gray-300"></div>
             </div>
             <div className="flex justify-center space-x-4">
@@ -201,9 +202,9 @@ const Register = () => {
                 Login with Google
               </button>
             </div>
-            <p className="text-lg text-center sm:px-6 dark:text-gray-600">
+            <p className="text-lg text-center sm:px-6 ">
               Already have an account?
-              <Link to={"/login"} className="underline dark:text-gray-800">
+              <Link to={"/login"} className="underline ">
                 Login Here
               </Link>
             </p>

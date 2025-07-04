@@ -1,5 +1,5 @@
 import { Rating, Star } from "@smastrom/react-rating";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router";
 import "@smastrom/react-rating/style.css";
 import axios from "axios";
@@ -7,12 +7,13 @@ import useAuth from "../Hooks/useAuth";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import Swal from "sweetalert2";
 import toast, { Toaster } from "react-hot-toast";
+import { ThemeContext } from "../Context/ThemeContext";
 const ProductDetails = () => {
   const { data } = useLoaderData();
   const modalBox = useRef("");
   const { user } = useAuth();
   const navigate = useNavigate();
-
+  const { darkMode } = useContext(ThemeContext);
   const [quantityErr, setQuantityErr] = useState(null);
   const [productCategory, setProductCategory] = useState("");
   const {
@@ -118,15 +119,15 @@ const ProductDetails = () => {
           <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0">
             <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
               <div className="shrink-0 max-w-md lg:max-w-lg mx-auto">
-                <img className="w-full" src={image_url} alt="" />
+                <img className="w-full rounded-2xl" src={image_url} alt="" />
               </div>
 
               <div className="mt-6 sm:mt-8 lg:mt-0 space-y-2">
-                <h1 className="text-xl font-semibold text-gray-900 sm:text-2xl ">
+                <h1 className="text-xl font-semibold  sm:text-2xl ">
                   {product_name}
                 </h1>
                 <div className="mt-4 sm:items-center sm:gap-4 sm:flex ">
-                  <p className="text-2xl font-extrabold text-gray-900 sm:text-3xl ">
+                  <p className="text-2xl font-extrabold a sm:text-3xl ">
                     BDT {price}
                   </p>
 
@@ -162,7 +163,10 @@ const ProductDetails = () => {
                     Short Description - {short_description}
                   </span>
                 </div>
-                <div className="p-5 shadow inline-block bg-slate-50 rounded mt-5">
+                <div
+                  className={`p-5 shadow inline-block rounded mt-5 ${
+                    darkMode === true ? "bg-gray-700 text-white" : "bg-slate-50"
+                  }`}>
                   <h3 className="text-lg">Seller Details</h3>
                   <hr />
                   <p>Seller Name - {user_name}</p>
@@ -192,7 +196,9 @@ const ProductDetails = () => {
       <dialog ref={modalBox} id="my_modal_7" className="modal overflow-scroll">
         <Toaster></Toaster>
         <div
-          className={`bg-slate-100
+          className={`${
+            darkMode === true ? "bg-gray-800 text-white" : "bg-slate-100"
+          }
                     p-5 rounded-sm space-y-5 my-10 max-w-6xl  relative`}>
           <div className=" sm:px-10 ">
             <div className="px-4 pt-8">
@@ -201,8 +207,8 @@ const ProductDetails = () => {
                 <span className="bg-amber-400">{product_name}</span>
               </p>
 
-              <div className="mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6">
-                <div className="flex flex-col rounded-lg bg-white sm:flex-row">
+              <div className="mt-8 space-y-3 rounded-lg border  px-2 py-4 sm:px-6">
+                <div className="flex flex-col rounded-lg sm:flex-row">
                   <img
                     className="m-2 h-24 w-28 rounded-md border object-cover object-center"
                     src={image_url}
@@ -223,7 +229,7 @@ const ProductDetails = () => {
                             type="button"
                             id="decrement-button"
                             data-input-counter-decrement="quantity-input"
-                            className="hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none">
+                            className="hover:bg-gray-400 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none">
                             <FaMinus></FaMinus>
                           </button>
                           <input
@@ -264,25 +270,21 @@ const ProductDetails = () => {
                 {/* Total  */}
                 <div className="mt-6 border-t border-b py-2">
                   <div className="flex items-center justify-between">
-                    <p className="text-sm font-medium text-gray-900">
-                      Product Price
-                    </p>
-                    <p className="font-semibold text-gray-900">
+                    <p className="text-sm font-medium ">Product Price</p>
+                    <p className="font-semibold ">
                       {num_price} x {quantityValue}
                     </p>
                   </div>
                   <div className="flex items-center justify-between">
-                    <p className="text-sm font-medium text-gray-900">
-                      Subtotal
-                    </p>
-                    <p className="font-semibold text-gray-900">
+                    <p className="text-sm font-medium ">Subtotal</p>
+                    <p className="font-semibold ">
                       {(num_price * quantityValue).toFixed(2)}
                     </p>
                   </div>
                 </div>
                 <div className="mt-6 flex items-center justify-between">
-                  <p className="text-sm font-medium text-gray-900">Total</p>
-                  <p className="text-2xl font-semibold text-gray-900">
+                  <p className="text-sm font-medium ">Total</p>
+                  <p className="text-2xl font-semibold ">
                     {(num_price * quantityValue).toFixed(2)} BDT
                   </p>
                 </div>
