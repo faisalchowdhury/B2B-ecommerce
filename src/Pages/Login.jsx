@@ -4,11 +4,13 @@ import loginAnimation from "../assets/Lottie-animation/login.json";
 import toast from "react-hot-toast";
 import { AuthContext } from "../Context/AuthContext";
 import Lottie from "lottie-react";
+import useAxiosBase from "../Hooks/useAxiosBase";
 
 const Login = () => {
   const { loginUser, user, loginWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const axiosBase = useAxiosBase();
 
   const handleLoginUser = (e) => {
     e.preventDefault();
@@ -29,7 +31,20 @@ const Login = () => {
 
   const googleLogin = () => {
     loginWithGoogle()
-      .then((result) => {
+      .then(async (result) => {
+        const userData = {
+          name: result.user.displayName,
+          email: result.user.email,
+          created_at: new Date().toISOString(),
+          last_login: new Date().toISOString(),
+        };
+
+        try {
+          const res = await axiosBase.post("/user", userData);
+          console.log(res.data);
+        } catch (err) {
+          console.log(err);
+        }
         toast.success("Successfully logged in");
         navigate(location.state || "/");
       })

@@ -1,15 +1,37 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { Link, useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import Lottie from "lottie-react";
 import registerAnimation from "../assets/Lottie-animation/register.json";
+import axios from "axios";
+import useAxiosBase from "../Hooks/useAxiosBase";
 
 const Register = () => {
+  const [selectedFile, setSelectedFile] = useState(null);
   const { registerUser, updateUserProfile, loginWithGoogle } =
     useContext(AuthContext);
-
+  const axiosBase = useAxiosBase();
   const navigate = useNavigate();
+
+  // Image Upload Feature
+  const handleFileUpload = (e) => {
+    const image = e.target.files[0];
+    setSelectedFile(image);
+  };
+
+  const uploadImgToImgbb = async (imageFile) => {
+    const formData = new FormData();
+    formData.append("image", imageFile);
+
+    const res = await axios.post(
+      "https://api.imgbb.com/1/upload?key=28979e91b0e80e25e0da4ca71083bb93",
+      formData
+    );
+
+    return res.data.data.display_url;
+  };
+  // Image Upload Feature
 
   const handleRegisterUser = (e) => {
     e.preventDefault();
@@ -26,9 +48,25 @@ const Register = () => {
         "Must have an Uppercase letter one Lowercase letter and Length must be at least 6 character"
       );
     } else {
-      registerUser(email, password).then((result) => {
+      registerUser(email, password).then(async (result) => {
         if (result.user) {
-          updateUserProfile(restField).then(() => {
+          const imageUrl = await uploadImgToImgbb(selectedFile);
+          updateUserProfile(restField, imageUrl).then(async () => {
+            console.log(result.user);
+
+            const userData = {
+              name: result.user.displayName,
+              email: result.user.email,
+              created_at: new Date().toISOString(),
+              last_login: new Date().toISOString(),
+            };
+
+            try {
+              const res = await axiosBase.post("/user", userData);
+              console.log(res.data);
+            } catch (err) {
+              console.log(err);
+            }
             toast.success("Account Created Successfully");
             navigate("/");
           });
@@ -39,7 +77,20 @@ const Register = () => {
 
   const googleLogin = () => {
     loginWithGoogle()
-      .then((result) => {
+      .then(async (result) => {
+        const userData = {
+          name: result.user.displayName,
+          email: result.user.email,
+          created_at: new Date().toISOString(),
+          last_login: new Date().toISOString(),
+        };
+
+        try {
+          const res = await axiosBase.post("/user", userData);
+          console.log(res.data);
+        } catch (err) {
+          console.log(err);
+        }
         toast.success("Successfully logged in");
         navigate("/");
       })
@@ -86,7 +137,8 @@ const Register = () => {
                 <div className="space-y-1 text-sm">
                   <label className="block dark:text-gray-600">Photo Url</label>
                   <input
-                    type="text"
+                    onChange={handleFileUpload}
+                    type="file"
                     name="photo_url"
                     placeholder="Photo Url"
                     className="w-full px-4 py-3 rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800 focus:dark:border-violet-600 border border-slate-500"

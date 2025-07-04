@@ -20,11 +20,12 @@ const AuthProvider = ({ children }) => {
   const registerUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
+
   // Update Profile
-  const updateUserProfile = ({ name, photo_url }) => {
+  const updateUserProfile = (userData, imageUrl) => {
     return updateProfile(auth.currentUser, {
-      displayName: name,
-      photoURL: photo_url,
+      displayName: userData.name,
+      photoURL: imageUrl,
     });
   };
 
