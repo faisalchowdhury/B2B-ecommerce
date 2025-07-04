@@ -93,9 +93,9 @@ const Home = () => {
               darkMode === true
                 ? "bg-linear-to-r from-slate-950 to-slate-800"
                 : "bg-linear-to-r from-[#fafafa] to-[#e3ebff]"
-            }  py-10 px-20 shadow sm:flex flex-wrap items-center rounded-lg`}>
+            } px-5 py-10 lg:px-20 shadow sm:flex flex-wrap items-center rounded-lg`}>
             <div className="flex-1 space-y-5">
-              <h1 className="text-5xl">SignUp For Newsletter</h1>
+              <h1 className="text-2xl sm:text-5xl">SignUp For Newsletter</h1>
               <p className="text-xl">
                 Follow when an unknown printer took a galley of type.
               </p>
